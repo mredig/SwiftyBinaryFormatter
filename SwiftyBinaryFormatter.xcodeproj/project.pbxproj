@@ -28,6 +28,7 @@
 /* Begin PBXFileReference section */
 		331A8F7822CB20D6005789F6 /* SwiftyBinaryFormatterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyBinaryFormatterTests.swift; sourceTree = "<group>"; };
 		331A8F7922CB20D6005789F6 /* SwiftyBinaryFormatterTypesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyBinaryFormatterTypesTests.swift; sourceTree = "<group>"; };
+		331A8F7C22CB2253005789F6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		33C3EC8222CB1FB20049BBFC /* SwiftyBinaryFormatter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyBinaryFormatter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		33C3EC8522CB1FB20049BBFC /* SwiftyBinaryFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftyBinaryFormatter.h; sourceTree = "<group>"; };
 		33C3EC8622CB1FB20049BBFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -59,6 +60,7 @@
 		33C3EC7822CB1FB20049BBFC = {
 			isa = PBXGroup;
 			children = (
+				331A8F7C22CB2253005789F6 /* README.md */,
 				33C3EC8422CB1FB20049BBFC /* SwiftyBinaryFormatter */,
 				33C3EC8F22CB1FB20049BBFC /* SwiftyBinaryFormatterTests */,
 				33C3EC8322CB1FB20049BBFC /* Products */,
