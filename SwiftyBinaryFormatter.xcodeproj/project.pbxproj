@@ -7,13 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		331A8F7A22CB20D6005789F6 /* SwiftyBinaryFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331A8F7822CB20D6005789F6 /* SwiftyBinaryFormatterTests.swift */; };
+		331A8F7B22CB20D6005789F6 /* SwiftyBinaryFormatterTypesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331A8F7922CB20D6005789F6 /* SwiftyBinaryFormatterTypesTests.swift */; };
 		33C3EC8C22CB1FB20049BBFC /* SwiftyBinaryFormatter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33C3EC8222CB1FB20049BBFC /* SwiftyBinaryFormatter.framework */; };
-		33C3EC9122CB1FB20049BBFC /* SwiftyBinaryFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C3EC9022CB1FB20049BBFC /* SwiftyBinaryFormatterTests.swift */; };
 		33C3EC9322CB1FB20049BBFC /* SwiftyBinaryFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 33C3EC8522CB1FB20049BBFC /* SwiftyBinaryFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		33C3EC9E22CB1FE40049BBFC /* BinaryFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C3EC9C22CB1FE40049BBFC /* BinaryFormatter.swift */; };
 		33C3EC9F22CB1FE40049BBFC /* BinaryFormattingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C3EC9D22CB1FE40049BBFC /* BinaryFormattingProtocol.swift */; };
-		33C3ECA222CB1FEE0049BBFC /* SwiftyBinaryFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C3ECA022CB1FEE0049BBFC /* SwiftyBinaryFormatterTests.swift */; };
-		33C3ECA322CB1FEE0049BBFC /* SwiftyBinaryFormatterTypesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C3ECA122CB1FEE0049BBFC /* SwiftyBinaryFormatterTypesTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,16 +26,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		331A8F7822CB20D6005789F6 /* SwiftyBinaryFormatterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyBinaryFormatterTests.swift; sourceTree = "<group>"; };
+		331A8F7922CB20D6005789F6 /* SwiftyBinaryFormatterTypesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyBinaryFormatterTypesTests.swift; sourceTree = "<group>"; };
 		33C3EC8222CB1FB20049BBFC /* SwiftyBinaryFormatter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyBinaryFormatter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		33C3EC8522CB1FB20049BBFC /* SwiftyBinaryFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftyBinaryFormatter.h; sourceTree = "<group>"; };
 		33C3EC8622CB1FB20049BBFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		33C3EC8B22CB1FB20049BBFC /* SwiftyBinaryFormatterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftyBinaryFormatterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		33C3EC9022CB1FB20049BBFC /* SwiftyBinaryFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyBinaryFormatterTests.swift; sourceTree = "<group>"; };
 		33C3EC9222CB1FB20049BBFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		33C3EC9C22CB1FE40049BBFC /* BinaryFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryFormatter.swift; sourceTree = "<group>"; };
 		33C3EC9D22CB1FE40049BBFC /* BinaryFormattingProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryFormattingProtocol.swift; sourceTree = "<group>"; };
-		33C3ECA022CB1FEE0049BBFC /* SwiftyBinaryFormatterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyBinaryFormatterTests.swift; path = "../../Image-Color-Counter/export to adobe swatch file/SwiftyBinaryFormatterTests/SwiftyBinaryFormatterTests.swift"; sourceTree = "<group>"; };
-		33C3ECA122CB1FEE0049BBFC /* SwiftyBinaryFormatterTypesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyBinaryFormatterTypesTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,9 +88,8 @@
 		33C3EC8F22CB1FB20049BBFC /* SwiftyBinaryFormatterTests */ = {
 			isa = PBXGroup;
 			children = (
-				33C3EC9022CB1FB20049BBFC /* SwiftyBinaryFormatterTests.swift */,
-				33C3ECA022CB1FEE0049BBFC /* SwiftyBinaryFormatterTests.swift */,
-				33C3ECA122CB1FEE0049BBFC /* SwiftyBinaryFormatterTypesTests.swift */,
+				331A8F7822CB20D6005789F6 /* SwiftyBinaryFormatterTests.swift */,
+				331A8F7922CB20D6005789F6 /* SwiftyBinaryFormatterTypesTests.swift */,
 				33C3EC9222CB1FB20049BBFC /* Info.plist */,
 			);
 			path = SwiftyBinaryFormatterTests;
@@ -164,6 +161,7 @@
 					};
 					33C3EC8A22CB1FB20049BBFC = {
 						CreatedOnToolsVersion = 10.2.1;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
@@ -216,9 +214,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				33C3ECA322CB1FEE0049BBFC /* SwiftyBinaryFormatterTypesTests.swift in Sources */,
-				33C3ECA222CB1FEE0049BBFC /* SwiftyBinaryFormatterTests.swift in Sources */,
-				33C3EC9122CB1FB20049BBFC /* SwiftyBinaryFormatterTests.swift in Sources */,
+				331A8F7A22CB20D6005789F6 /* SwiftyBinaryFormatterTests.swift in Sources */,
+				331A8F7B22CB20D6005789F6 /* SwiftyBinaryFormatterTypesTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,6 +365,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = SwiftyBinaryFormatter/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -395,6 +393,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = SwiftyBinaryFormatter/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -412,6 +411,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L5UZAT7KA9;
 				INFOPLIST_FILE = SwiftyBinaryFormatterTests/Info.plist;
@@ -422,6 +422,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.redeggproductions.SwiftyBinaryFormatterTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -431,6 +432,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L5UZAT7KA9;
 				INFOPLIST_FILE = SwiftyBinaryFormatterTests/Info.plist;
