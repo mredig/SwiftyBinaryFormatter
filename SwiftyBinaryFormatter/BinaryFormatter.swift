@@ -81,6 +81,7 @@ public struct BinaryFormatter {
 		return data.reduce("") { $0 + $1.hexString }
 	}
 
+	/// Slow if called repeatedly. Caching would be smart.
 	public var renderedData: Data {
 		let bytes: [UInt8] = data.reduce([]) { $0 + $1.bytes }
 		return Data(bytes)
