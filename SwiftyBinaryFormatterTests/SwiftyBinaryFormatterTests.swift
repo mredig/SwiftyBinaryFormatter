@@ -39,10 +39,14 @@ class SwiftyBinaryFormatterTests: XCTestCase {
 	func testInits() {
 		let testData: [BinaryFormattingProtocol] = [BinaryFormatter.Word(238974), BinaryFormatter.TwoByte(55653)]
 		let formatter = BinaryFormatter(data: testData)
-		let data = formatter.renderedData
+		let data = formatter.data
 
 		let confirmedData = testData.reduce(Data()) { $0 + $1.bytes }
 		XCTAssertEqual(data, confirmedData)
+
+		let formatter2 = BinaryFormatter(data: [1,2,3,4])
+		let data2 = Data([1,2,3,4])
+		XCTAssertEqual(formatter2.data, data2)
 	}
 
 	func testHexString() {
@@ -140,7 +144,24 @@ class SwiftyBinaryFormatterTests: XCTestCase {
 			formatter.append(element: value)
 		}
 
-//		XCTAssertEqual(<#T##expression1: Equatable##Equatable#>, <#T##expression2: Equatable##Equatable#>)
+		let longHex = Array(separatedHex.joined(separator: ""))
+		var compareData = Data()
+		var accumulator = ""
+		let theAppender = {
+			let value = UInt8(accumulator, radix: 16)!
+			accumulator = ""
+			compareData.append(value)
+		}
+
+		for (index, char) in longHex.enumerated() {
+			if index > 0 && index.isMultiple(of: 2) {
+				theAppender()
+			}
+			accumulator.append(char)
+		}
+		theAppender() //need to run one additional time
+
+		XCTAssertEqual(formatter.data, compareData)
 	}
 
 }

@@ -45,12 +45,11 @@ public struct BinaryFormatter {
 
 	public var byteCount: Int { data.count }
 
-	public private(set) var data = Data()
+	public private(set) var data: Data
 
 
-	public init(estimatedEntryCount: Int = 0) {
-		data = Data(repeating: 0, count: estimatedEntryCount)
-		data.removeAll(keepingCapacity: true)
+	public init() {
+		data = Data()
 	}
 
 	public init(data: [BinaryFormattingProtocol]) {
