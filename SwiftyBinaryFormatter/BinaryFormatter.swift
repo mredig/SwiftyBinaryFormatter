@@ -35,7 +35,30 @@ extension BinaryFormatter.TwoByte: BinaryFormattingProtocol {}
 
 extension BinaryFormatter.Byte: BinaryFormattingProtocol {}
 
-public class BinaryFormatter {
+public protocol BinaryFormatting: AnyObject {
+	var byteCount: Int { get }
+
+	associatedtype BinaryFormattingType: BinaryFormattingProtocol
+	var data: ContiguousArray<BinaryFormattingType> { get }
+
+	init(estimatedEntryCount: Int)
+	init(data: [BinaryFormattingType])
+
+	func append(element: BinaryFormattingProtocol)
+
+	func append<BF: BinaryFormatting>(formatter: BF)
+
+	func append(sequence: [BinaryFormattingProtocol])
+
+	subscript(index: Int) -> BinaryFormattingType { get set }
+
+	var hexString: String { get }
+
+	var renderedData: Data { get }
+
+}
+
+public class BinaryFormatter: BinaryFormatting {
 
 	public typealias LongWord = UInt64
 	public typealias Word = UInt32
@@ -44,33 +67,45 @@ public class BinaryFormatter {
 
 	public private(set) var byteCount: Int = 0
 
-	static let invalidHexCharacters = CharacterSet(charactersIn: "0123456789abcdef").inverted
+	public typealias BinaryFormattingType = BinaryFormatter.Byte
 
-	private(set) var data = [BinaryFormattingProtocol]()
+	public private(set) var data = ContiguousArray<BinaryFormattingType>()
 
-	public init() {}
+	required public init(estimatedEntryCount: Int = 0) {
+		self.data = ContiguousArray<BinaryFormattingType>(repeating: 0, count: estimatedEntryCount)
+		self.data.removeAll(keepingCapacity: true)
+	}
 
 	public init(data: [BinaryFormattingProtocol]) {
-		self.data = data
+		self.data = ContiguousArray(data.flatMap { $0.bytes })
+		byteCount = data.reduce(0) { $0 + $1.byteCount }
+	}
+
+	public required init(data: [BinaryFormattingType]) {
+		self.data = ContiguousArray(data)
 		byteCount = data.reduce(0) { $0 + $1.byteCount }
 	}
 
 	public func append(element: BinaryFormattingProtocol) {
-		data.append(element)
+		data.append(contentsOf: element.bytes)
 		byteCount += element.byteCount
 	}
 
-	public func append(formatter: BinaryFormatter) {
-		data.append(contentsOf: formatter.data)
+	public func append<BF: BinaryFormatting>(formatter: BF) {
+		if let baked = formatter as? BinaryFormatter {
+			self.data.append(contentsOf: baked.data)
+		} else {
+			self.data.append(contentsOf: formatter.data.flatMap { $0.bytes })
+		}
 		byteCount += formatter.byteCount
 	}
 
 	public func append(sequence: [BinaryFormattingProtocol]) {
-		data.append(contentsOf: sequence)
+		data.append(contentsOf: sequence.flatMap { $0.bytes })
 		byteCount += sequence.reduce(0) { $0 + $1.byteCount }
 	}
 
-	public subscript(index: Int) -> BinaryFormattingProtocol {
+	public subscript(index: Int) -> BinaryFormattingType {
 		get {
 			data[index]
 		}
@@ -83,9 +118,7 @@ public class BinaryFormatter {
 		data.reduce("") { $0 + $1.hexString }
 	}
 
-	/// Slow if called repeatedly. Caching would be smart.
 	public var renderedData: Data {
-		let bytes: [UInt8] = data.reduce([]) { $0 + $1.bytes }
-		return Data(bytes)
+		Data(data)
 	}
 }

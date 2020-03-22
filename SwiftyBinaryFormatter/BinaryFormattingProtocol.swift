@@ -79,6 +79,9 @@ public protocol BinaryFormattingProtocol: CustomStringConvertible {
 }
 
 public extension BinaryFormattingProtocol where Self: FixedWidthInteger {
+	static var invalidHexCharacters: CharacterSet {
+		CharacterSet(charactersIn: "0123456789abcdef").inverted
+	}
 
 	private typealias LongWord = BinaryFormatter.LongWord
 	private typealias Word = BinaryFormatter.Word
@@ -238,7 +241,7 @@ public extension BinaryFormattingProtocol where Self: FixedWidthInteger {
 	init(hexString: String) throws {
 		let lowerCase = String(hexString.lowercased().utf8)
 		guard lowerCase.count <= Self.typeByteCount * 2 else { throw BinaryErrors.wrongHexStringSize }
-		guard lowerCase.rangeOfCharacter(from: BinaryFormatter.invalidHexCharacters) == nil else {
+		guard lowerCase.rangeOfCharacter(from: Self.invalidHexCharacters) == nil else {
 			throw BinaryErrors.containsNonHexCharacters
 		}
 
