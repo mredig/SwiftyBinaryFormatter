@@ -85,6 +85,6 @@ public struct BinaryFormatter {
 		data.reduce("") { $0 + $1.hexString }
 	}
 
-	@available(*, deprecated, message: "Use `data` instead.")
+	@available(*, deprecated, renamed: "data")
 	public var renderedData: Data { data }
 }
