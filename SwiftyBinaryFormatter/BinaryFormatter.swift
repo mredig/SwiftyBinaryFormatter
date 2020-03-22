@@ -43,38 +43,34 @@ public struct BinaryFormatter {
 	public typealias TwoByte = UInt16
 	public typealias Byte = UInt8
 
-	public private(set) var byteCount: Int = 0
+	public var byteCount: Int { data.count }
 
-	public private(set) var data = ContiguousArray<BinaryFormatter.Byte>()
+	public private(set) var data = Data()
+
 
 	public init(estimatedEntryCount: Int = 0) {
-		self.data = ContiguousArray<BinaryFormatter.Byte>(repeating: 0, count: estimatedEntryCount)
-		self.data.removeAll(keepingCapacity: true)
+		data = Data(repeating: 0, count: estimatedEntryCount)
+		data.removeAll(keepingCapacity: true)
 	}
 
 	public init(data: [BinaryFormattingProtocol]) {
-		self.data = ContiguousArray(data.flatMap { $0.bytes })
-		byteCount = data.reduce(0) { $0 + $1.byteCount }
+		self.data = Data(data.flatMap { $0.bytes })
 	}
 
 	public init(data: [BinaryFormatter.Byte]) {
-		self.data = ContiguousArray(data)
-		byteCount = data.reduce(0) { $0 + $1.byteCount }
+		self.data = Data(data)
 	}
 
 	public mutating func append(element: BinaryFormattingProtocol) {
 		data.append(contentsOf: element.bytes)
-		byteCount += element.byteCount
 	}
 
 	public mutating func append(formatter: BinaryFormatter) {
 		data.append(contentsOf: formatter.data)
-		byteCount += formatter.byteCount
 	}
 
 	public mutating func append(sequence: [BinaryFormattingProtocol]) {
 		data.append(contentsOf: sequence.flatMap { $0.bytes })
-		byteCount += sequence.reduce(0) { $0 + $1.byteCount }
 	}
 
 	public subscript(index: Int) -> BinaryFormatter.Byte {
@@ -90,7 +86,6 @@ public struct BinaryFormatter {
 		data.reduce("") { $0 + $1.hexString }
 	}
 
-	public var renderedData: Data {
-		Data(data)
-	}
+	@available(*, deprecated, message: "Use `data` instead.")
+	public var renderedData: Data { data }
 }
