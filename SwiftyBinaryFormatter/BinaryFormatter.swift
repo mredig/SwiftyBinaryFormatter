@@ -98,7 +98,7 @@ extension Data {
 		reduce("") { $0 + $1.hexString }
 	}
 
-	@available(swift, obsoleted: 5.0, renamed: "count")
+	/// Simply an alias for `count`, but semantically makes more sense in some siutations.
 	public var byteCount: Int { count }
 
 	@available(swift, obsoleted: 5.0, message: "No need to use the `data` property as this is an instance of Data itself")
