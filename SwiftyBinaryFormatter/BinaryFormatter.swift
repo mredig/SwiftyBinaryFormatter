@@ -72,7 +72,7 @@ public class BinaryFormatter {
 
 	public subscript(index: Int) -> BinaryFormattingProtocol {
 		get {
-			return data[index]
+			data[index]
 		}
 		set {
 			data[index] = newValue
@@ -80,7 +80,7 @@ public class BinaryFormatter {
 	}
 
 	public var hexString: String {
-		return data.reduce("") { $0 + $1.hexString }
+		data.reduce("") { $0 + $1.hexString }
 	}
 
 	/// Slow if called repeatedly. Caching would be smart.
