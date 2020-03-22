@@ -19,7 +19,7 @@ class SwiftyBinaryFormatterTests: XCTestCase {
 
 		var output = ""
 		while size > 0 {
-			let number = BinaryFormatter.LongWord.random(in: 0...BinaryFormatter.LongWord.max)
+			let number = Data.LongWord.random(in: 0...Data.LongWord.max)
 			let bytes = number.bytes
 			let potentialByteCount = [0,4,6,7] // random number of how many bytes to remove, leaving the result with 8, 4, 2, or 1 bytes as a result
 			let firstNonZeroIndex = potentialByteCount.randomElement() ?? 1
@@ -37,28 +37,27 @@ class SwiftyBinaryFormatterTests: XCTestCase {
 
 	// MARK: - test binary formatter inits
 	func testInits() {
-		let testData: [BinaryFormattingProtocol] = [BinaryFormatter.Word(238974), BinaryFormatter.TwoByte(55653)]
-		let formatter = BinaryFormatter(data: testData)
-		let data = formatter.data
+		let testData: [BinaryFormattingProtocol] = [Data.Word(238974), Data.TwoByte(55653)]
+		let formatter = Data(data: testData)
 
 		let confirmedData = testData.reduce(Data()) { $0 + $1.bytes }
-		XCTAssertEqual(data, confirmedData)
+		XCTAssertEqual(formatter, confirmedData)
 
-		let formatter2 = BinaryFormatter(data: [1,2,3,4])
+		let formatter2 = Data(data: [1,2,3,4])
 		let data2 = Data([1,2,3,4])
-		XCTAssertEqual(formatter2.data, data2)
+		XCTAssertEqual(formatter2, data2)
 	}
 
 	func testHexString() {
-		let dead = try! BinaryFormatter.TwoByte(hexString: "Dead")
-		let beef = try! BinaryFormatter.TwoByte(hexString: "Beef")
-		let cafe = try! BinaryFormatter.TwoByte(hexString: "cafe")
+		let dead = try! Data.TwoByte(hexString: "Dead")
+		let beef = try! Data.TwoByte(hexString: "Beef")
+		let cafe = try! Data.TwoByte(hexString: "cafe")
 
-		var formatter = BinaryFormatter()
+		var formatter = Data()
 		formatter.append(sequence: [dead, beef])
 		formatter.append(element: cafe)
 
-		var formatter2 = BinaryFormatter()
+		var formatter2 = Data()
 		formatter2.append(element: dead)
 		formatter2.append(sequence: [beef, cafe])
 
@@ -67,44 +66,44 @@ class SwiftyBinaryFormatterTests: XCTestCase {
 	}
 
 	func testByteCount() {
-		let de = try! BinaryFormatter.Byte(hexString: "De")
-		let ad = try! BinaryFormatter.Byte(hexString: "ad")
-		let beefcafe = try! BinaryFormatter.Word(hexString: "Beefcafe")
+		let de = try! Data.Byte(hexString: "De")
+		let ad = try! Data.Byte(hexString: "ad")
+		let beefcafe = try! Data.Word(hexString: "Beefcafe")
 
 		let formatter = BinaryFormatter(data: [de, ad, beefcafe])
 		XCTAssertEqual(formatter.byteCount, 6)
 
-		var formatter2 = BinaryFormatter()
+		var formatter2 = Data()
 		formatter2.append(element: de)
 		formatter2.append(sequence: [ad, beefcafe])
-		XCTAssertEqual(formatter2.byteCount, 6)
+		XCTAssertEqual(formatter2.count, 6)
 		formatter2.append(formatter: formatter)
-		XCTAssertEqual(formatter2.byteCount, 12)
+		XCTAssertEqual(formatter2.count, 12)
 	}
 
 	func testSubscript() {
-		let de = try! BinaryFormatter.Byte(hexString: "De")
-		let ad = try! BinaryFormatter.Byte(hexString: "ad")
-		let dead = try! BinaryFormatter.TwoByte(hexString: "Dead")
-		let beefcafe = try! BinaryFormatter.Word(hexString: "Beefcafe")
+		let de = try! Data.Byte(hexString: "De")
+		let ad = try! Data.Byte(hexString: "ad")
+		let dead = try! Data.TwoByte(hexString: "Dead")
+		let beefcafe = try! Data.Word(hexString: "Beefcafe")
 
-		var formatter = BinaryFormatter(data: [de, ad, beefcafe])
+		var formatter = Data(data: [de, ad, beefcafe])
 		XCTAssertEqual(formatter[0], de)
 
 		formatter[0] = ad
 		XCTAssertEqual(formatter[0], ad)
 		formatter[0] = de
 
-		let formatter2 = BinaryFormatter(data: [dead, beefcafe])
-		XCTAssertEqual(formatter.data, formatter2.data)
+		let formatter2 = Data(data: [dead, beefcafe])
+		XCTAssertEqual(formatter, formatter2)
 	}
 
 	func testAppendFormatter() {
-		let dead = try! BinaryFormatter.TwoByte(hexString: "Dead")
-		let beef = try! BinaryFormatter.TwoByte(hexString: "Beef")
-		let cafe = try! BinaryFormatter.TwoByte(hexString: "cafe")
+		let dead = try! Data.TwoByte(hexString: "Dead")
+		let beef = try! Data.TwoByte(hexString: "Beef")
+		let cafe = try! Data.TwoByte(hexString: "cafe")
 
-		var formatter = BinaryFormatter()
+		var formatter = Data()
 		formatter.append(sequence: [dead, beef])
 		formatter.append(element: cafe)
 
@@ -120,29 +119,31 @@ class SwiftyBinaryFormatterTests: XCTestCase {
 		guard let testBytes = Bundle(for: type(of: self)).url(forResource: "random", withExtension: "bytes") else { return }
 		let separatedHex = (try String(contentsOf: testBytes)).split(separator: "\n").map { String($0) }
 
-		var formatter = BinaryFormatter()
-
+		let start = CFAbsoluteTimeGetCurrent()
+		var formatter = Data()
 		for hexStr in separatedHex {
 			let value: BinaryFormattingProtocol
 			switch hexStr.count {
 			case 2: //1
 				// byte
-				value = try BinaryFormatter.Byte(hexString: hexStr)
+				value = try Data.Byte(hexString: hexStr)
 			case 4: //2
 				// twobyte
-				value = try BinaryFormatter.TwoByte(hexString: hexStr)
+				value = try Data.TwoByte(hexString: hexStr)
 			case 8: //4
 				// word
-				value = try BinaryFormatter.Word(hexString: hexStr)
+				value = try Data.Word(hexString: hexStr)
 			case 16: //8
 				// longword
-				value = try BinaryFormatter.LongWord(hexString: hexStr)
+				value = try Data.LongWord(hexString: hexStr)
 			default:
 				XCTFail("Invalid hex string: \(hexStr)")
 				return
 			}
 			formatter.append(element: value)
 		}
+
+		let lap = CFAbsoluteTimeGetCurrent()
 
 		let longHex = Array(separatedHex.joined(separator: ""))
 		var compareData = Data()
@@ -160,8 +161,13 @@ class SwiftyBinaryFormatterTests: XCTestCase {
 			accumulator.append(char)
 		}
 		theAppender() //need to run one additional time
+		let finish = CFAbsoluteTimeGetCurrent()
 
-		XCTAssertEqual(formatter.data, compareData)
+		print("BinaryFormatting time: \(lap - start)")
+		print("Old Data time: \(finish - lap)")
+		print("BinaryForatting takes \((lap - start) / (finish - lap)) times as long as Old Data method.")
+
+		XCTAssertEqual(formatter, compareData)
 	}
 
 }

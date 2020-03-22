@@ -83,7 +83,7 @@ public struct BinaryFormatter {
 
 	public var hexString: String { data.hexString }
 
-	@available(*, deprecated, renamed: "data")
+	@available(swift, obsoleted: 5.0, renamed: "data", message: "But also just use Data instead of BinaryFormatter")
 	public var renderedData: Data { data }
 }
 
@@ -94,15 +94,15 @@ extension Data {
 	public typealias TwoByte = UInt16
 	public typealias Byte = UInt8
 
-	var hexString: String {
+	public var hexString: String {
 		reduce("") { $0 + $1.hexString }
 	}
 
-	@available(*, deprecated, renamed: "count")
-	var byteCount: Int { count }
+	@available(swift, obsoleted: 5.0, renamed: "count")
+	public var byteCount: Int { count }
 
-	@available(*, deprecated, message: "No need to use the `data` property as this is an instance of Data itself")
-	var data: Data { self }
+	@available(swift, obsoleted: 5.0, message: "No need to use the `data` property as this is an instance of Data itself")
+	public var data: Data { self }
 
 	public init(data: [BinaryFormattingProtocol]) {
 		self.init(data.flatMap { $0.bytes })
@@ -112,16 +112,16 @@ extension Data {
 		self.init(data)
 	}
 
-	mutating func append(element: BinaryFormattingProtocol) {
+	public mutating func append(element: BinaryFormattingProtocol) {
 		append(contentsOf: element.bytes)
 	}
 
 	@available(*, deprecated, message: "BinaryFormatter is deprecated. Look into migrating the source to Data")
-	mutating func append(formatter: BinaryFormatter) {
+	public mutating func append(formatter: BinaryFormatter) {
 		append(contentsOf: formatter.data)
 	}
 
-	mutating func append(sequence: [BinaryFormattingProtocol]) {
+	public mutating func append(sequence: [BinaryFormattingProtocol]) {
 		append(contentsOf: sequence.flatMap { $0.bytes })
 	}
 }
