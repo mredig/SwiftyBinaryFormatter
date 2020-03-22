@@ -17,9 +17,9 @@ public protocol BinaryFormattingProtocol: CustomStringConvertible {
 	LongWord values will be padded with 0s if smaller. Larger values won't overflow but instead create a new LongWord.
 	(See bytes)
 	*/
-	var longWords: [BinaryFormatter.LongWord] { get }
+	var longWords: [Data.LongWord] { get }
 	/// 64 bit value. Will pad value with 0s if smaller than 64 bits.
-	var longWord: BinaryFormatter.LongWord { get }
+	var longWord: Data.LongWord { get }
 
 	/**
 	Whether larger or smaller than a Word, will form an array of Words, breaking at appropriate intervals. Word values
@@ -28,17 +28,17 @@ public protocol BinaryFormattingProtocol: CustomStringConvertible {
 	Note that this breaks the established naming convention to include the word "Array". This is because there's an
 	existing "words" property.
 	*/
-	var wordsArray: [BinaryFormatter.Word] { get }
+	var wordsArray: [Data.Word] { get }
 	/// 32 bit value. Will pad value with 0s if smaller than 32 bits. Will clip value if larger than 32 bits. (see byte)
-	var word: BinaryFormatter.Word { get }
+	var word: Data.Word { get }
 
 	/**
 	Whether larger or smaller than a TwoByte, will form an array of TwoBytes, breaking at appropriate intervals. TwoByte
 	values will be padded with 0s if smaller. Larger values won't overflow but instead create a new TwoByte. (See bytes)
 	*/
-	var twoBytes: [BinaryFormatter.TwoByte] { get }
+	var twoBytes: [Data.TwoByte] { get }
 	/// 16 bit value. Will pad value with 0s if smaller than 16 bits. Will clip value if larger than 16 bits. (see byte)
-	var twoByte: BinaryFormatter.TwoByte { get }
+	var twoByte: Data.TwoByte { get }
 
 	/**
 	Whether larger or smaller than a Byte, will form an array of Bytes, breaking at appropriate intervals. Byte
@@ -47,7 +47,7 @@ public protocol BinaryFormattingProtocol: CustomStringConvertible {
 	For example, given a Word (with 32 bits) such as `00110011 01010101 00000000 00001111` (aka `861208591`) would be
 	converted to a Byte array resulting in `[00110011, 01010101, 00000000, 00001111]` (aka `[51, 85, 0, 15]`)
 	*/
-	var bytes: [BinaryFormatter.Byte] { get }
+	var bytes: [Data.Byte] { get }
 	/**
 	8 bit value. Will pad value with 0s if smaller than 8 bits. Will clip value if larger than 8 bits.
 
@@ -55,7 +55,7 @@ public protocol BinaryFormattingProtocol: CustomStringConvertible {
 	clipped to a Byte resulting in `00001111` (aka `15`). Conversely, given a value of `101` (aka `5`) will result in
 	`00000101` (aka `5`).
 	*/
-	var byte: BinaryFormatter.Byte { get }
+	var byte: Data.Byte { get }
 
 	/**
 	Will throw in the following scenarios:
@@ -83,10 +83,10 @@ public extension BinaryFormattingProtocol where Self: FixedWidthInteger {
 		CharacterSet(charactersIn: "0123456789abcdef").inverted
 	}
 
-	private typealias LongWord = BinaryFormatter.LongWord
-	private typealias Word = BinaryFormatter.Word
-	private typealias TwoByte = BinaryFormatter.TwoByte
-	private typealias Byte = BinaryFormatter.Byte
+	private typealias LongWord = Data.LongWord
+	private typealias Word = Data.Word
+	private typealias TwoByte = Data.TwoByte
+	private typealias Byte = Data.Byte
 
 	static var typeByteCount: Int {
 		return Self.bitWidth / 8
@@ -98,7 +98,7 @@ public extension BinaryFormattingProtocol where Self: FixedWidthInteger {
 
 	// MARK: Single Types
 	/// Provides conversion if necessary via padding with 0's to a LongWord
-	var longWord: BinaryFormatter.LongWord {
+	var longWord: Data.LongWord {
 		// technically, this can never happen unless a new UInt size is added beyond 64 (like UInt128 or something)
 		if byteCount > LongWord.typeByteCount {
 			let destMax = LongWord(LongWord.max)
@@ -110,7 +110,7 @@ public extension BinaryFormattingProtocol where Self: FixedWidthInteger {
 
 	/// Provides conversion if necessary via padding with 0's to a Word, or clipping higher magnitude bits if the source
 	/// is larger. Will result in a value of UInt32.max
-	var word: BinaryFormatter.Word {
+	var word: Data.Word {
 		if byteCount > Word.typeByteCount {
 			let destMax = LongWord(Word.max)
 			let anded = destMax & LongWord(self)
@@ -121,7 +121,7 @@ public extension BinaryFormattingProtocol where Self: FixedWidthInteger {
 
 	/// Provides conversion if necessary via padding with 0's to a TwoByte, or clipping higher magnitude bits if the source
 	/// is larger. Will result in a value of UInt16.max
-	var twoByte: BinaryFormatter.TwoByte {
+	var twoByte: Data.TwoByte {
 		if byteCount > TwoByte.typeByteCount {
 			let destMax = LongWord(TwoByte.max)
 			let anded = destMax & LongWord(self)
@@ -132,7 +132,7 @@ public extension BinaryFormattingProtocol where Self: FixedWidthInteger {
 
 	/// Provides conversion if necessary via clipping higher magnitude bits if the source is larger than a Byte. Will
 	/// result in a value of UInt8.max
-	var byte: BinaryFormatter.Byte {
+	var byte: Data.Byte {
 		if byteCount > Byte.typeByteCount {
 			let destMax = LongWord(Byte.max)
 			let anded = destMax & LongWord(self)
@@ -143,7 +143,7 @@ public extension BinaryFormattingProtocol where Self: FixedWidthInteger {
 
 	// MARK: Sequence Types
 	/// Provides conversion (if necessary) to a sequence of LongWord, retaining all bits in their respective position.
-	var longWords: [BinaryFormatter.LongWord] {
+	var longWords: [Data.LongWord] {
 		var outArray = [LongWord]()
 		let shiftSize = LongWord.typeByteCount * 8
 		let strideStart = (Self.typeByteCount * 8) - shiftSize
@@ -162,7 +162,7 @@ public extension BinaryFormattingProtocol where Self: FixedWidthInteger {
 	}
 
 	/// Provides conversion (if necessary) to a sequence of Word, retaining all bits in their respective position.
-	var wordsArray: [BinaryFormatter.Word] {
+	var wordsArray: [Data.Word] {
 		var outArray = [Word]()
 		let shiftSize = Word.typeByteCount * 8
 		let strideStart = (Self.typeByteCount * 8) - shiftSize
@@ -181,7 +181,7 @@ public extension BinaryFormattingProtocol where Self: FixedWidthInteger {
 	}
 
 	/// Provides conversion (if necessary) to a sequence of TwoByte, retaining all bits in their respective position.
-	var twoBytes: [BinaryFormatter.TwoByte] {
+	var twoBytes: [Data.TwoByte] {
 		var outArray = [TwoByte]()
 		let shiftSize = TwoByte.typeByteCount * 8
 		let strideStart = (Self.typeByteCount * 8) - shiftSize
@@ -200,7 +200,7 @@ public extension BinaryFormattingProtocol where Self: FixedWidthInteger {
 	}
 
 	/// Provides conversion (if necessary) to a sequence of Byte, retaining all bits in their respective position.
-	var bytes: [BinaryFormatter.Byte] {
+	var bytes: [Data.Byte] {
 		var outArray = [Byte]()
 		let shiftSize = Byte.typeByteCount * 8
 		let strideStart = (Self.typeByteCount * 8) - shiftSize
