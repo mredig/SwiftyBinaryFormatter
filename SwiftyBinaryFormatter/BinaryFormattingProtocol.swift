@@ -94,6 +94,7 @@ public extension BinaryFormattingProtocol where Self: FixedWidthInteger {
 	}
 
 	// MARK: Single Types
+	/// Provides conversion if necessary via padding with 0's to a LongWord
 	var longWord: BinaryFormatter.LongWord {
 		// technically, this can never happen unless a new UInt size is added beyond 64 (like UInt128 or something)
 		if byteCount > LongWord.typeByteCount {
@@ -104,6 +105,8 @@ public extension BinaryFormattingProtocol where Self: FixedWidthInteger {
 		return LongWord(self)
 	}
 
+	/// Provides conversion if necessary via padding with 0's to a Word, or clipping higher magnitude bits if the source
+	/// is larger. Will result in a value of UInt32.max
 	var word: BinaryFormatter.Word {
 		if byteCount > Word.typeByteCount {
 			let destMax = LongWord(Word.max)
@@ -113,6 +116,8 @@ public extension BinaryFormattingProtocol where Self: FixedWidthInteger {
 		return Word(self)
 	}
 
+	/// Provides conversion if necessary via padding with 0's to a TwoByte, or clipping higher magnitude bits if the source
+	/// is larger. Will result in a value of UInt16.max
 	var twoByte: BinaryFormatter.TwoByte {
 		if byteCount > TwoByte.typeByteCount {
 			let destMax = LongWord(TwoByte.max)
@@ -122,6 +127,8 @@ public extension BinaryFormattingProtocol where Self: FixedWidthInteger {
 		return TwoByte(self)
 	}
 
+	/// Provides conversion if necessary via clipping higher magnitude bits if the source is larger than a Byte. Will
+	/// result in a value of UInt8.max
 	var byte: BinaryFormatter.Byte {
 		if byteCount > Byte.typeByteCount {
 			let destMax = LongWord(Byte.max)
@@ -132,6 +139,7 @@ public extension BinaryFormattingProtocol where Self: FixedWidthInteger {
 	}
 
 	// MARK: Sequence Types
+	/// Provides conversion (if necessary) to a sequence of LongWord, retaining all bits in their respective position.
 	var longWords: [BinaryFormatter.LongWord] {
 		var outArray = [LongWord]()
 		let shiftSize = LongWord.typeByteCount * 8
@@ -150,6 +158,7 @@ public extension BinaryFormattingProtocol where Self: FixedWidthInteger {
 		return outArray
 	}
 
+	/// Provides conversion (if necessary) to a sequence of Word, retaining all bits in their respective position.
 	var wordsArray: [BinaryFormatter.Word] {
 		var outArray = [Word]()
 		let shiftSize = Word.typeByteCount * 8
@@ -168,6 +177,7 @@ public extension BinaryFormattingProtocol where Self: FixedWidthInteger {
 		return outArray
 	}
 
+	/// Provides conversion (if necessary) to a sequence of TwoByte, retaining all bits in their respective position.
 	var twoBytes: [BinaryFormatter.TwoByte] {
 		var outArray = [TwoByte]()
 		let shiftSize = TwoByte.typeByteCount * 8
@@ -186,6 +196,7 @@ public extension BinaryFormattingProtocol where Self: FixedWidthInteger {
 		return outArray
 	}
 
+	/// Provides conversion (if necessary) to a sequence of Byte, retaining all bits in their respective position.
 	var bytes: [BinaryFormatter.Byte] {
 		var outArray = [Byte]()
 		let shiftSize = Byte.typeByteCount * 8
@@ -205,6 +216,7 @@ public extension BinaryFormattingProtocol where Self: FixedWidthInteger {
 	}
 
 	// MARK: String Output
+	/// Representation of the value in a hex string.
 	var hexString: String {
 		let valueStr = String(self, radix: 16)
 		let zeroCount = self.byteCount * 2 - valueStr.count
