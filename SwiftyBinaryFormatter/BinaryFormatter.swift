@@ -35,7 +35,7 @@ extension BinaryFormatter.TwoByte: BinaryFormattingProtocol {}
 
 extension BinaryFormatter.Byte: BinaryFormattingProtocol {}
 
-public struct BinaryFormatter {
+public class BinaryFormatter {
 
 	public typealias LongWord = UInt64
 	public typealias Word = UInt32
@@ -56,15 +56,15 @@ public struct BinaryFormatter {
 		self.data = data
 	}
 
-	public mutating func append(element: BinaryFormattingProtocol) {
+	public func append(element: BinaryFormattingProtocol) {
 		data.append(element)
 	}
 
-	public mutating func append(formatter: BinaryFormatter) {
+	public func append(formatter: BinaryFormatter) {
 		data.append(contentsOf: formatter.data)
 	}
 
-	public mutating func append(sequence: [BinaryFormattingProtocol]) {
+	public func append(sequence: [BinaryFormattingProtocol]) {
 		data.append(contentsOf: sequence)
 	}
 

@@ -27,11 +27,11 @@ class SwiftyBinaryFormatterTests: XCTestCase {
 		let beef = try! BinaryFormatter.TwoByte(hexString: "Beef")
 		let cafe = try! BinaryFormatter.TwoByte(hexString: "cafe")
 
-		var formatter = BinaryFormatter()
+		let formatter = BinaryFormatter()
 		formatter.append(sequence: [dead, beef])
 		formatter.append(element: cafe)
 
-		var formatter2 = BinaryFormatter()
+		let formatter2 = BinaryFormatter()
 		formatter2.append(element: dead)
 		formatter2.append(sequence: [beef, cafe])
 
@@ -54,7 +54,7 @@ class SwiftyBinaryFormatterTests: XCTestCase {
 		let dead = try! BinaryFormatter.TwoByte(hexString: "Dead")
 		let beefcafe = try! BinaryFormatter.Word(hexString: "Beefcafe")
 
-		var formatter = BinaryFormatter(data: [de, ad, beefcafe])
+		let formatter = BinaryFormatter(data: [de, ad, beefcafe])
 		XCTAssertEqual(formatter[0] as? BinaryFormatter.Byte, de)
 
 		formatter[0] = dead
@@ -66,11 +66,11 @@ class SwiftyBinaryFormatterTests: XCTestCase {
 		let beef = try! BinaryFormatter.TwoByte(hexString: "Beef")
 		let cafe = try! BinaryFormatter.TwoByte(hexString: "cafe")
 
-		var formatter = BinaryFormatter()
+		let formatter = BinaryFormatter()
 		formatter.append(sequence: [dead, beef])
 		formatter.append(element: cafe)
 
-		var formatter2 = BinaryFormatter()
+		let formatter2 = BinaryFormatter()
 		formatter2.append(element: cafe)
 		formatter2.append(sequence: [beef, dead])
 
