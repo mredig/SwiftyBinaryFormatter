@@ -50,11 +50,11 @@ class SwiftyBinaryFormatterTests: XCTestCase {
 		let beef = try! BinaryFormatter.TwoByte(hexString: "Beef")
 		let cafe = try! BinaryFormatter.TwoByte(hexString: "cafe")
 
-		let formatter = BinaryFormatter()
+		var formatter = BinaryFormatter()
 		formatter.append(sequence: [dead, beef])
 		formatter.append(element: cafe)
 
-		let formatter2 = BinaryFormatter()
+		var formatter2 = BinaryFormatter()
 		formatter2.append(element: dead)
 		formatter2.append(sequence: [beef, cafe])
 
@@ -70,7 +70,7 @@ class SwiftyBinaryFormatterTests: XCTestCase {
 		let formatter = BinaryFormatter(data: [de, ad, beefcafe])
 		XCTAssertEqual(formatter.byteCount, 6)
 
-		let formatter2 = BinaryFormatter()
+		var formatter2 = BinaryFormatter()
 		formatter2.append(element: de)
 		formatter2.append(sequence: [ad, beefcafe])
 		XCTAssertEqual(formatter2.byteCount, 6)
@@ -84,7 +84,7 @@ class SwiftyBinaryFormatterTests: XCTestCase {
 		let dead = try! BinaryFormatter.TwoByte(hexString: "Dead")
 		let beefcafe = try! BinaryFormatter.Word(hexString: "Beefcafe")
 
-		let formatter = BinaryFormatter(data: [de, ad, beefcafe])
+		var formatter = BinaryFormatter(data: [de, ad, beefcafe])
 		XCTAssertEqual(formatter[0], de)
 
 		formatter[0] = ad
@@ -100,11 +100,11 @@ class SwiftyBinaryFormatterTests: XCTestCase {
 		let beef = try! BinaryFormatter.TwoByte(hexString: "Beef")
 		let cafe = try! BinaryFormatter.TwoByte(hexString: "cafe")
 
-		let formatter = BinaryFormatter()
+		var formatter = BinaryFormatter()
 		formatter.append(sequence: [dead, beef])
 		formatter.append(element: cafe)
 
-		let formatter2 = BinaryFormatter()
+		var formatter2 = BinaryFormatter()
 		formatter2.append(element: cafe)
 		formatter2.append(sequence: [beef, dead])
 
@@ -116,7 +116,7 @@ class SwiftyBinaryFormatterTests: XCTestCase {
 		guard let testBytes = Bundle(for: type(of: self)).url(forResource: "random", withExtension: "bytes") else { return }
 		let separatedHex = (try String(contentsOf: testBytes)).split(separator: "\n").map { String($0) }
 
-		let formatter = BinaryFormatter()
+		var formatter = BinaryFormatter()
 
 		for hexStr in separatedHex {
 			let value: BinaryFormattingProtocol
