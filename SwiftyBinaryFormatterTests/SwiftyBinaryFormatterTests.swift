@@ -46,6 +46,13 @@ class SwiftyBinaryFormatterTests: XCTestCase {
 
 		let formatter = BinaryFormatter(data: [de, ad, beefcafe])
 		XCTAssertEqual(formatter.byteCount, 6)
+
+		let formatter2 = BinaryFormatter()
+		formatter2.append(element: de)
+		formatter2.append(sequence: [ad, beefcafe])
+		XCTAssertEqual(formatter2.byteCount, 6)
+		formatter2.append(formatter: formatter)
+		XCTAssertEqual(formatter2.byteCount, 12)
 	}
 
 	func testSubscript() {

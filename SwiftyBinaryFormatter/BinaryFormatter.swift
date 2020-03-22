@@ -42,9 +42,7 @@ public class BinaryFormatter {
 	public typealias TwoByte = UInt16
 	public typealias Byte = UInt8
 
-	public var byteCount: Int {
-		return data.reduce(0) { $0 + $1.byteCount }
-	}
+	public private(set) var byteCount: Int = 0
 
 	static let invalidHexCharacters = CharacterSet(charactersIn: "0123456789abcdef").inverted
 
@@ -54,18 +52,22 @@ public class BinaryFormatter {
 
 	public init(data: [BinaryFormattingProtocol]) {
 		self.data = data
+		byteCount = data.reduce(0) { $0 + $1.byteCount }
 	}
 
 	public func append(element: BinaryFormattingProtocol) {
 		data.append(element)
+		byteCount += element.byteCount
 	}
 
 	public func append(formatter: BinaryFormatter) {
 		data.append(contentsOf: formatter.data)
+		byteCount += formatter.byteCount
 	}
 
 	public func append(sequence: [BinaryFormattingProtocol]) {
 		data.append(contentsOf: sequence)
+		byteCount += sequence.reduce(0) { $0 + $1.byteCount }
 	}
 
 	public subscript(index: Int) -> BinaryFormattingProtocol {
