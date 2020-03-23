@@ -6,7 +6,6 @@
 //  Copyright © 2020 Red_Egg Productions. All rights reserved.
 //
 
-import Foundation
 import SwiftyBinaryFormatter
 
 struct FooFormatExport {
@@ -17,11 +16,11 @@ struct FooFormatExport {
 	/// Provides the total count of all the chunks in this file.
 	var chunkCount: TwoByte {
 		// there's always 1 body chunk + a variable amount of meta chunks
-		TwoByte(metaStorage.count) + 1
+		TwoByte(metaChunks.count) + 1
 	}
 
 	/// Storage for meta data until it's time to compile down to a binary file
-	private var metaStorage = [Data]()
+	private var metaChunks = [MetaType]()
 	/// Storage for body data until it's time to compile down to a binary file
 	private var bodyStorage = Data()
 
@@ -56,25 +55,7 @@ struct FooFormatExport {
 
 	/// Accumulates and stores metadata for inclusion when compiling.
 	mutating func addMetaData(ofType type: MetaType) {
-		// structure: 4 bytes for type, 4 bytes for data byte size, then all data bytes
-
-		let value: Data
-		switch type {
-		case .author(let author):
-			value = strToData(author)
-		case .creationDate(let dateValue):
-			value = Data(dateValue.bytes)
-		}
-
-		// calulate size
-		let hexKeyBytes = type.hexKey.bytes
-		let byteCount = value.count + hexKeyBytes.count
-
-		// compile data in correct order
-		var mergedData = Data(Word(byteCount).bytes)
-		mergedData.append(sequence: hexKeyBytes)
-		mergedData.append(value)
-		metaStorage.append(mergedData)
+		metaChunks.append(type)
 
 		// if cached data exists, delete it
 		_renderedData = nil
@@ -98,6 +79,30 @@ struct FooFormatExport {
 		_renderedData = nil
 	}
 
+	private func renderMetaType(_ type: MetaType) -> Data {
+		// structure: 4 bytes for type, 4 bytes for data byte size, then all data bytes
+		// convert the value portion to Data
+		let metaValue: Data
+		switch type {
+		case .author(let author):
+			metaValue = strToData(author)
+		case .creationDate(let dateValue):
+			metaValue = Data(dateValue.bytes)
+		}
+
+		// calulate size
+		let hexKeyBytes = type.hexKey.bytes
+		let byteCount =  hexKeyBytes.count + metaValue.count
+
+		// compile data in correct order
+		var mergedData = Data(bfp: ChunkType.meta.rawValue)
+		mergedData.append(sequence: Word(byteCount).bytes)
+		mergedData.append(sequence: hexKeyBytes)
+		mergedData.append(metaValue)
+
+		return mergedData
+	}
+
 	/// Compiles all the accumualted information into a single binary blob, suitable for writing to disk or otherwise exporting.
 	mutating func renderData() -> Data {
 		// structure: 4 byte magic number, 1 byte file version, 2 bytes for chunk count, finally followed by all the chunks
@@ -107,10 +112,10 @@ struct FooFormatExport {
 
 		// compile the file header, including magic, version, chunk count, and meta info
 		var renderedData = Data(bfpSequence: [magicHeader, version, chunkCount])
-		for metaChunk in metaStorage {
-			// append each meta chunk, first marking it as a meta chunk
-			renderedData.append(element: ChunkType.meta.rawValue)
-			renderedData.append(metaChunk)
+
+		// compile and append all the meta chunks
+		for metaChunk in metaChunks {
+			renderedData.append(renderMetaType(metaChunk))
 		}
 
 		// compile and append the body data
