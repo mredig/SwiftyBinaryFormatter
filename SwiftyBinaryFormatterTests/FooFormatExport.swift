@@ -26,25 +26,59 @@ struct FooFormatExport {
 		case body = 0x424f4459
 	}
 
-	enum MetaType: Data.Word {
-		case auth = 0x41555448
-		case date = 0x44415445
+	enum MetaType {
+		case auth(String)
+		case date(Double)
+
+		var hexKey: Data.Word {
+			switch self {
+			case .auth:
+				return 0x41555448
+			case .date:
+				return 0x44415445
+			}
+		}
 	}
 
-	mutating func addMetaData(ofType type: MetaType, value: Data) {
+	mutating func addMetaData(ofType type: MetaType) {
 		// structure: 4 bytes for type, 4 bytes for data byte size, then all data bytes
 
+		let value: Data
+		switch type {
+		case .auth(let author):
+			value = strToData(author)
+		case .date(let dateValue):
+			value = Data(dateValue.bytes)
+		}
 
-		// need to add four for the bytes in `type`
-		var mergedData = Data(Data.Word(value.count + 4).bytes)
-		mergedData.append(sequence: type.rawValue.bytes)
+		// calulate size
+		let hexKeyBytes = type.hexKey.bytes
+		let byteCount = value.count + hexKeyBytes.count
+
+		// compile data in correct order
+		var mergedData = Data(Data.Word(byteCount).bytes)
+		mergedData.append(sequence: hexKeyBytes)
 		mergedData.append(value)
 		metaStorage.append(mergedData)
+
+		// if cached data exists, delete it
 		_renderedData = nil
 	}
 
+	/// Could really just convert the string to Data, but this tests more internals
+	private func strToData(_ string: String) -> Data {
+		let dataSeq = string.compactMap { letter -> UInt8? in
+			guard let value = try? Data.Byte(character: letter) else { return nil }
+			return value
+		}
+		return Data(dataSeq)
+	}
+
 	mutating func setBody(_ body: String) {
-		bodyStorage = body.data(using: .utf8) ?? Data()
+		// convert string to data and store it
+		bodyStorage = strToData(body)
+
+		// if cached data exists, delete it
 		_renderedData = nil
 	}
 
@@ -53,6 +87,9 @@ struct FooFormatExport {
 			return renderedData
 		}
 
+		// structure: 4 byte magic number, 1 byte file version, 2 bytes for chunk count, finally followed by all the chunks
+
+		// compile the file header, including magic, version, chunk count, and meta info
 		var renderedData = Data(bfpSequence: [magicHeader, version, chunkCount])
 		for metaChunk in metaStorage {
 			// append each meta chunk, first marking it as a meta chunk
@@ -60,11 +97,12 @@ struct FooFormatExport {
 			renderedData.append(metaChunk)
 		}
 
-//		let test = 1
-		let bodyHeader = Data(blpSequence: [ChunkType.body.rawValue, Data.Word(bodyStorage.count + 1)])
+		// compile and append the body data
+		let bodyHeader = Data(bfpSequence: [ChunkType.body.rawValue, Data.Word(bodyStorage.count + 1)])
 		let bodyData = bodyHeader + bodyStorage + [0]
 		renderedData.append(bodyData)
 
+		// cache the data so subsequent requests are faster
 		_renderedData = renderedData
 		return renderedData
 	}

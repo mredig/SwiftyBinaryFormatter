@@ -13,11 +13,10 @@ class FooFormatTests: XCTestCase {
 	func testFooFormatExport() {
 		var fooFormat = FooFormatExport()
 
-		let dateFloat = 1584945896.43886
-		let dateBytes = dateFloat.bitPattern.bytes
+		let dateFloat = 1584945896.43886 // Monday, March 23, 2020 1:44:56.43886 AM CDT
 
-		fooFormat.addMetaData(ofType: .auth, value: "Michael Redig".data(using: .utf8)!)
-		fooFormat.addMetaData(ofType: .date, value: Data(dateBytes))
+		fooFormat.addMetaData(ofType: .auth("Michael Redig"))
+		fooFormat.addMetaData(ofType: .date(dateFloat))
 
 		fooFormat.setBody("Hello World!")
 
