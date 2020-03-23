@@ -10,6 +10,8 @@
 		331A8F7A22CB20D6005789F6 /* SwiftyBinaryFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331A8F7822CB20D6005789F6 /* SwiftyBinaryFormatterTests.swift */; };
 		331A8F7B22CB20D6005789F6 /* SwiftyBinaryFormatterTypesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331A8F7922CB20D6005789F6 /* SwiftyBinaryFormatterTypesTests.swift */; };
 		33A94E1624276AE4006072D9 /* random.bytes in Resources */ = {isa = PBXBuildFile; fileRef = 33A94E1524276AE4006072D9 /* random.bytes */; };
+		33A94E18242887D9006072D9 /* FooFormatExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A94E17242887D9006072D9 /* FooFormatExport.swift */; };
+		33A94E1A242898FB006072D9 /* FooFormatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A94E19242898FB006072D9 /* FooFormatTests.swift */; };
 		33C3EC8C22CB1FB20049BBFC /* SwiftyBinaryFormatter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33C3EC8222CB1FB20049BBFC /* SwiftyBinaryFormatter.framework */; };
 		33C3EC9322CB1FB20049BBFC /* SwiftyBinaryFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 33C3EC8522CB1FB20049BBFC /* SwiftyBinaryFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		33C3EC9E22CB1FE40049BBFC /* BinaryFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C3EC9C22CB1FE40049BBFC /* BinaryFormatter.swift */; };
@@ -31,6 +33,8 @@
 		331A8F7922CB20D6005789F6 /* SwiftyBinaryFormatterTypesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyBinaryFormatterTypesTests.swift; sourceTree = "<group>"; };
 		331A8F7C22CB2253005789F6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		33A94E1524276AE4006072D9 /* random.bytes */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = random.bytes; sourceTree = "<group>"; };
+		33A94E17242887D9006072D9 /* FooFormatExport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooFormatExport.swift; sourceTree = "<group>"; };
+		33A94E19242898FB006072D9 /* FooFormatTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooFormatTests.swift; sourceTree = "<group>"; };
 		33C3EC8222CB1FB20049BBFC /* SwiftyBinaryFormatter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyBinaryFormatter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		33C3EC8522CB1FB20049BBFC /* SwiftyBinaryFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftyBinaryFormatter.h; sourceTree = "<group>"; };
 		33C3EC8622CB1FB20049BBFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -92,6 +96,8 @@
 		33C3EC8F22CB1FB20049BBFC /* SwiftyBinaryFormatterTests */ = {
 			isa = PBXGroup;
 			children = (
+				33A94E17242887D9006072D9 /* FooFormatExport.swift */,
+				33A94E19242898FB006072D9 /* FooFormatTests.swift */,
 				331A8F7822CB20D6005789F6 /* SwiftyBinaryFormatterTests.swift */,
 				331A8F7922CB20D6005789F6 /* SwiftyBinaryFormatterTypesTests.swift */,
 				33C3EC9222CB1FB20049BBFC /* Info.plist */,
@@ -222,6 +228,8 @@
 			files = (
 				331A8F7A22CB20D6005789F6 /* SwiftyBinaryFormatterTests.swift in Sources */,
 				331A8F7B22CB20D6005789F6 /* SwiftyBinaryFormatterTypesTests.swift in Sources */,
+				33A94E1A242898FB006072D9 /* FooFormatTests.swift in Sources */,
+				33A94E18242887D9006072D9 /* FooFormatExport.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
