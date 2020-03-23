@@ -129,6 +129,10 @@ extension Data {
 		self.init(bfpSequence: data)
 	}
 
+	public init(bfp: BinaryFormattingProtocol) {
+		self.init(bfp.bytes)
+	}
+
 	public init(bfpSequence: [BinaryFormattingProtocol]) {
 		self.init(bfpSequence.flatMap { $0.bytes })
 	}
