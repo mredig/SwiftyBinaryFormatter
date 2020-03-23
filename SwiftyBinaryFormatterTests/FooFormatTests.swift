@@ -15,8 +15,8 @@ class FooFormatTests: XCTestCase {
 
 		let dateFloat = 1584945896.43886 // Monday, March 23, 2020 1:44:56.43886 AM CDT
 
-		fooFormat.addMetaData(ofType: .auth("Michael Redig"))
-		fooFormat.addMetaData(ofType: .date(dateFloat))
+		fooFormat.addMetaData(ofType: .author(author: "Michael Redig"))
+		fooFormat.addMetaData(ofType: .creationDate(secondsSinceEpoch: dateFloat))
 
 		fooFormat.setBody("Hello World!")
 
