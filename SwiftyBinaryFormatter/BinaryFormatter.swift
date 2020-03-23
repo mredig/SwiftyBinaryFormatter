@@ -32,8 +32,24 @@ extension Data.Word: BinaryFormattingProtocol {
 }
 
 extension Data.TwoByte: BinaryFormattingProtocol {}
-
 extension Data.Byte: BinaryFormattingProtocol {}
+extension Int: BinaryFormattingProtocol {}
+extension Int8: BinaryFormattingProtocol {}
+extension Int16: BinaryFormattingProtocol {}
+extension Int32: BinaryFormattingProtocol {}
+extension Int64: BinaryFormattingProtocol {}
+
+extension Float {
+	var bytes: [Data.Byte] {
+		Data.Word(withFloatRepresentation: self).bytes
+	}
+}
+
+extension Double {
+	var bytes: [Data.Byte] {
+		Data.LongWord(withDoubleRepresentation: self).bytes
+	}
+}
 
 
 @available(*, deprecated, renamed: "Data")
@@ -104,10 +120,16 @@ extension Data {
 	@available(swift, obsoleted: 5.0, message: "No need to use the `data` property as this is an instance of Data itself")
 	public var data: Data { self }
 
+	@available(*, deprecated, renamed: "init(blpSequence:)")
 	public init(data: [BinaryFormattingProtocol]) {
-		self.init(data.flatMap { $0.bytes })
+		self.init(bfpSequence: data)
 	}
 
+	public init(bfpSequence: [BinaryFormattingProtocol]) {
+		self.init(bfpSequence.flatMap { $0.bytes })
+	}
+
+	@available(*, deprecated, renamed: "init(_:)")
 	public init(data: [Data.Byte]) {
 		self.init(data)
 	}

@@ -36,7 +36,7 @@ struct FooFormatExport {
 
 
 		// need to add four for the bytes in `type`
-		var mergedData = Data(data: Data.Word(value.count + 4).bytes)
+		var mergedData = Data(Data.Word(value.count + 4).bytes)
 		mergedData.append(sequence: type.rawValue.bytes)
 		mergedData.append(value)
 		metaStorage.append(mergedData)
@@ -53,14 +53,15 @@ struct FooFormatExport {
 			return renderedData
 		}
 
-		var renderedData = Data(data: [magicHeader, version, chunkCount])
+		var renderedData = Data(bfpSequence: [magicHeader, version, chunkCount])
 		for metaChunk in metaStorage {
 			// append each meta chunk, first marking it as a meta chunk
 			renderedData.append(element: ChunkType.meta.rawValue)
 			renderedData.append(metaChunk)
 		}
 
-		let bodyHeader = Data(data: [ChunkType.body.rawValue, Data.Word(bodyStorage.count + 1)])
+//		let test = 1
+		let bodyHeader = Data(blpSequence: [ChunkType.body.rawValue, Data.Word(bodyStorage.count + 1)])
 		let bodyData = bodyHeader + bodyStorage + [0]
 		renderedData.append(bodyData)
 

@@ -16,8 +16,6 @@ class FooFormatTests: XCTestCase {
 		let dateFloat = 1584945896.43886
 		let dateBytes = dateFloat.bitPattern.bytes
 
-		dateBytes.forEach { print($0.hexString) }
-
 		fooFormat.addMetaData(ofType: .auth, value: "Michael Redig".data(using: .utf8)!)
 		fooFormat.addMetaData(ofType: .date, value: Data(dateBytes))
 
@@ -45,8 +43,6 @@ class FooFormatTests: XCTestCase {
 		}
 		theAppender() //need to run one additional time
 
-		print(renderedData.hexString)
-		print(compareData.hexString)
 		XCTAssertEqual(renderedData, compareData)
 	}
 }

@@ -38,13 +38,15 @@ class SwiftyBinaryFormatterTests: XCTestCase {
 	// MARK: - test binary formatter inits
 	func testInits() {
 		let testData: [BinaryFormattingProtocol] = [Data.Word(238974), Data.TwoByte(55653)]
-		let formatter = Data(data: testData)
+		let formatter = Data(bfpSequence: testData)
 
 		let confirmedData = testData.reduce(Data()) { $0 + $1.bytes }
 		XCTAssertEqual(formatter, confirmedData)
 
-		let formatter2 = Data(data: [1,2,3,4])
-		let data2 = Data([1,2,3,4])
+		let blpSeq: [BinaryFormattingProtocol] = [Data.Byte(1), Data.Byte(2), Data.Byte(3), Data.Byte(4)]
+		let formatter2 = Data(bfpSequence: blpSeq)
+		let uInt8: [UInt8] = [1, 2, 3, 4]
+		let data2 = Data(uInt8)
 		XCTAssertEqual(formatter2, data2)
 	}
 
@@ -88,14 +90,14 @@ class SwiftyBinaryFormatterTests: XCTestCase {
 		let dead = try! Data.TwoByte(hexString: "Dead")
 		let beefcafe = try! Data.Word(hexString: "Beefcafe")
 
-		var formatter = Data(data: [de, ad, beefcafe])
+		var formatter = Data(bfpSequence: [de, ad, beefcafe])
 		XCTAssertEqual(formatter[0], de)
 
 		formatter[0] = ad
 		XCTAssertEqual(formatter[0], ad)
 		formatter[0] = de
 
-		let formatter2 = Data(data: [dead, beefcafe])
+		let formatter2 = Data(bfpSequence: [dead, beefcafe])
 		XCTAssertEqual(formatter, formatter2)
 	}
 
