@@ -39,13 +39,13 @@ extension Int16: BinaryFormattingProtocol {}
 extension Int32: BinaryFormattingProtocol {}
 extension Int64: BinaryFormattingProtocol {}
 
-extension Float {
+public extension Float {
 	var bytes: [Data.Byte] {
 		Data.Word(withFloatRepresentation: self).bytes
 	}
 }
 
-extension Double {
+public extension Double {
 	var bytes: [Data.Byte] {
 		Data.LongWord(withDoubleRepresentation: self).bytes
 	}
