@@ -65,6 +65,7 @@ class SwiftyBinaryFormatterTests: XCTestCase {
 		XCTAssertEqual(formatter.hexString, formatter2.hexString)
 	}
 
+	/// Also tests ability to use BinaryFormatter. While deprecated, can at least know that it works
 	func testByteCount() {
 		let de = try! Data.Byte(hexString: "De")
 		let ad = try! Data.Byte(hexString: "ad")
@@ -98,6 +99,7 @@ class SwiftyBinaryFormatterTests: XCTestCase {
 		XCTAssertEqual(formatter, formatter2)
 	}
 
+	/// Also tests ability to use BinaryFormatter. While deprecated, can at least know that it works
 	func testAppendFormatter() {
 		let dead = try! Data.TwoByte(hexString: "Dead")
 		let beef = try! Data.TwoByte(hexString: "Beef")

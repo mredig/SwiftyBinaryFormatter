@@ -15,33 +15,33 @@ class SwiftyBinaryFormatterTypesTests: XCTestCase {
 	// MARK: - Basics
 	func testLongWord() {
 		// 00110011 01010101 00000000 00001111  11001100 10101111 00000101 11111100
-		let value = BinaryFormatter.LongWord(3_698_862_736_813_262_332)
+		let value = Data.LongWord(3_698_862_736_813_262_332)
 
-		let correctBytes: [BinaryFormatter.Byte] = [51, 85, 0, 15, 204, 175, 5, 252]
+		let correctBytes: [Data.Byte] = [51, 85, 0, 15, 204, 175, 5, 252]
 		let bytes = value.bytes
 		XCTAssertEqual(bytes, correctBytes)
-		let correctByte: BinaryFormatter.Byte = 252
+		let correctByte: Data.Byte = 252
 		let byte = value.byte
 		XCTAssertEqual(byte, correctByte)
 
-		let correctTwoBytes: [BinaryFormatter.TwoByte] = [13141, 15, 52399, 1532]
+		let correctTwoBytes: [Data.TwoByte] = [13141, 15, 52399, 1532]
 		let twoBytes = value.twoBytes
 		XCTAssertEqual(twoBytes, correctTwoBytes)
-		let correctTwoByte: BinaryFormatter.TwoByte = 1532
+		let correctTwoByte: Data.TwoByte = 1532
 		let twoByte = value.twoByte
 		XCTAssertEqual(twoByte, correctTwoByte)
 
-		let correctWords: [BinaryFormatter.Word] = [861208591, 3434022396]
+		let correctWords: [Data.Word] = [861208591, 3434022396]
 		let words = value.wordsArray
 		XCTAssertEqual(words, correctWords)
-		let correctWord: BinaryFormatter.Word = 3434022396
+		let correctWord: Data.Word = 3434022396
 		let word = value.word
 		XCTAssertEqual(word, correctWord)
 
-		let correctLongWords: [BinaryFormatter.LongWord] = [3_698_862_736_813_262_332]
+		let correctLongWords: [Data.LongWord] = [3_698_862_736_813_262_332]
 		let longWords = value.longWords
 		XCTAssertEqual(longWords, correctLongWords)
-		let correctLongWord: BinaryFormatter.LongWord = 3_698_862_736_813_262_332
+		let correctLongWord: Data.LongWord = 3_698_862_736_813_262_332
 		let longWord = value.longWord
 		XCTAssertEqual(longWord, correctLongWord)
 
@@ -52,43 +52,43 @@ class SwiftyBinaryFormatterTypesTests: XCTestCase {
 		let hexValue = value.hexString
 		XCTAssertEqual(hexValue, correctHexValue)
 
-		let shortValue = BinaryFormatter.LongWord(18)
+		let shortValue = Data.LongWord(18)
 		let correctHexValue2 = "0000000000000012"
 		let hexValue2 = shortValue.hexString
 		XCTAssertEqual(hexValue2, correctHexValue2)
-		XCTAssertEqual(BinaryFormatter.LongWord(0).hexString, "0000000000000000")
+		XCTAssertEqual(Data.LongWord(0).hexString, "0000000000000000")
 
 		XCTAssertEqual(value.hexString, value.description)
 	}
 
 	func testWord() {
-		let value = BinaryFormatter.Word(3_735_928_559)
+		let value = Data.Word(3_735_928_559)
 
-		let correctBytes: [BinaryFormatter.Byte] = [222, 173, 190, 239]
+		let correctBytes: [Data.Byte] = [222, 173, 190, 239]
 		let bytes = value.bytes
 		XCTAssertEqual(bytes, correctBytes)
-		let correctByte: BinaryFormatter.Byte = 239
+		let correctByte: Data.Byte = 239
 		let byte = value.byte
 		XCTAssertEqual(byte, correctByte)
 
-		let correctTwoBytes: [BinaryFormatter.TwoByte] = [57005, 48879]
+		let correctTwoBytes: [Data.TwoByte] = [57005, 48879]
 		let twoBytes = value.twoBytes
 		XCTAssertEqual(twoBytes, correctTwoBytes)
-		let correctTwoByte: BinaryFormatter.TwoByte = 48879
+		let correctTwoByte: Data.TwoByte = 48879
 		let twoByte = value.twoByte
 		XCTAssertEqual(twoByte, correctTwoByte)
 
-		let correctWords: [BinaryFormatter.Word] = [3_735_928_559]
+		let correctWords: [Data.Word] = [3_735_928_559]
 		let words = value.wordsArray
 		XCTAssertEqual(words, correctWords)
-		let correctWord: BinaryFormatter.Word = 3_735_928_559
+		let correctWord: Data.Word = 3_735_928_559
 		let word = value.word
 		XCTAssertEqual(word, correctWord)
 
-		let correctLongWords: [BinaryFormatter.LongWord] = [3_735_928_559]
+		let correctLongWords: [Data.LongWord] = [3_735_928_559]
 		let longWords = value.longWords
 		XCTAssertEqual(longWords, correctLongWords)
-		let correctLongWord: BinaryFormatter.LongWord = 3_735_928_559
+		let correctLongWord: Data.LongWord = 3_735_928_559
 		let longWord = value.longWord
 		XCTAssertEqual(longWord, correctLongWord)
 
@@ -99,43 +99,43 @@ class SwiftyBinaryFormatterTypesTests: XCTestCase {
 		let hexValue = value.hexString
 		XCTAssertEqual(hexValue, correctHexValue)
 
-		let shortValue = BinaryFormatter.Word(18)
+		let shortValue = Data.Word(18)
 		let correctHexValue2 = "00000012"
 		let hexValue2 = shortValue.hexString
 		XCTAssertEqual(hexValue2, correctHexValue2)
-		XCTAssertEqual(BinaryFormatter.Word(0).hexString, "00000000")
+		XCTAssertEqual(Data.Word(0).hexString, "00000000")
 
 		XCTAssertEqual(value.hexString, value.description)
 	}
 
 	func testTwoByte() {
-		let value = BinaryFormatter.TwoByte(57_005)
+		let value = Data.TwoByte(57_005)
 
-		let correctBytes: [BinaryFormatter.Byte] = [222, 173]
+		let correctBytes: [Data.Byte] = [222, 173]
 		let bytes = value.bytes
 		XCTAssertEqual(bytes, correctBytes)
-		let correctByte: BinaryFormatter.Byte = 173
+		let correctByte: Data.Byte = 173
 		let byte = value.byte
 		XCTAssertEqual(byte, correctByte)
 
-		let correctTwoBytes: [BinaryFormatter.TwoByte] = [57005]
+		let correctTwoBytes: [Data.TwoByte] = [57005]
 		let twoBytes = value.twoBytes
 		XCTAssertEqual(twoBytes, correctTwoBytes)
-		let correctTwoByte: BinaryFormatter.TwoByte = 57005
+		let correctTwoByte: Data.TwoByte = 57005
 		let twoByte = value.twoByte
 		XCTAssertEqual(twoByte, correctTwoByte)
 
-		let correctWords: [BinaryFormatter.Word] = [57005]
+		let correctWords: [Data.Word] = [57005]
 		let words = value.wordsArray
 		XCTAssertEqual(words, correctWords)
-		let correctWord: BinaryFormatter.Word = 57005
+		let correctWord: Data.Word = 57005
 		let word = value.word
 		XCTAssertEqual(word, correctWord)
 
-		let correctLongWords: [BinaryFormatter.LongWord] = [57005]
+		let correctLongWords: [Data.LongWord] = [57005]
 		let longWords = value.longWords
 		XCTAssertEqual(longWords, correctLongWords)
-		let correctLongWord: BinaryFormatter.LongWord = 57005
+		let correctLongWord: Data.LongWord = 57005
 		let longWord = value.longWord
 		XCTAssertEqual(longWord, correctLongWord)
 
@@ -146,43 +146,43 @@ class SwiftyBinaryFormatterTypesTests: XCTestCase {
 		let hexValue = value.hexString
 		XCTAssertEqual(hexValue, correctHexValue)
 
-		let shortValue = BinaryFormatter.TwoByte(18)
+		let shortValue = Data.TwoByte(18)
 		let correctHexValue2 = "0012"
 		let hexValue2 = shortValue.hexString
 		XCTAssertEqual(hexValue2, correctHexValue2)
-		XCTAssertEqual(BinaryFormatter.TwoByte(0).hexString, "0000")
+		XCTAssertEqual(Data.TwoByte(0).hexString, "0000")
 
 		XCTAssertEqual(value.hexString, value.description)
 	}
 
 	func testByte() {
-		let value = BinaryFormatter.Byte(222)
+		let value = Data.Byte(222)
 
-		let correctBytes: [BinaryFormatter.Byte] = [222]
+		let correctBytes: [Data.Byte] = [222]
 		let bytes = value.bytes
 		XCTAssertEqual(bytes, correctBytes)
-		let correctByte: BinaryFormatter.Byte = 222
+		let correctByte: Data.Byte = 222
 		let byte = value.byte
 		XCTAssertEqual(byte, correctByte)
 
-		let correctTwoBytes: [BinaryFormatter.TwoByte] = [222]
+		let correctTwoBytes: [Data.TwoByte] = [222]
 		let twoBytes = value.twoBytes
 		XCTAssertEqual(twoBytes, correctTwoBytes)
-		let correctTwoByte: BinaryFormatter.TwoByte = 222
+		let correctTwoByte: Data.TwoByte = 222
 		let twoByte = value.twoByte
 		XCTAssertEqual(twoByte, correctTwoByte)
 
-		let correctWords: [BinaryFormatter.Word] = [222]
+		let correctWords: [Data.Word] = [222]
 		let words = value.wordsArray
 		XCTAssertEqual(words, correctWords)
-		let correctWord: BinaryFormatter.Word = 222
+		let correctWord: Data.Word = 222
 		let word = value.word
 		XCTAssertEqual(word, correctWord)
 
-		let correctLongWords: [BinaryFormatter.LongWord] = [222]
+		let correctLongWords: [Data.LongWord] = [222]
 		let longWords = value.longWords
 		XCTAssertEqual(longWords, correctLongWords)
-		let correctLongWord: BinaryFormatter.LongWord = 222
+		let correctLongWord: Data.LongWord = 222
 		let longWord = value.longWord
 		XCTAssertEqual(longWord, correctLongWord)
 
@@ -193,11 +193,11 @@ class SwiftyBinaryFormatterTypesTests: XCTestCase {
 		let hexValue = value.hexString
 		XCTAssertEqual(hexValue, correctHexValue)
 
-		let shortValue = BinaryFormatter.Byte(5)
+		let shortValue = Data.Byte(5)
 		let correctHexValue2 = "05"
 		let hexValue2 = shortValue.hexString
 		XCTAssertEqual(hexValue2, correctHexValue2)
-		XCTAssertEqual(BinaryFormatter.Byte(0).hexString, "00")
+		XCTAssertEqual(Data.Byte(0).hexString, "00")
 
 		XCTAssertEqual(value.hexString, value.description)
 	}
@@ -207,21 +207,21 @@ class SwiftyBinaryFormatterTypesTests: XCTestCase {
 		let character: Character = "t"
 
 		do {
-			let longWord = try BinaryFormatter.LongWord(character: character)
+			let longWord = try Data.LongWord(character: character)
 			XCTAssertEqual(longWord, 116)
 
-			let word = try BinaryFormatter.Word(character: character)
+			let word = try Data.Word(character: character)
 			XCTAssertEqual(word, 116)
 
-			let twoByte = try BinaryFormatter.TwoByte(character: character)
+			let twoByte = try Data.TwoByte(character: character)
 			XCTAssertEqual(twoByte, 116)
 
-			let byte = try BinaryFormatter.Byte(character: character)
+			let byte = try Data.Byte(character: character)
 			XCTAssertEqual(byte, 116)
 		} catch {
 			XCTFail("failed to convert character to binary format: \(error)")
 		}
-		XCTAssertThrowsError(try BinaryFormatter.LongWord(character: "π"))
+		XCTAssertThrowsError(try Data.LongWord(character: "π"))
 	}
 
 	// MARK: - Hex String inits
@@ -233,13 +233,13 @@ class SwiftyBinaryFormatterTypesTests: XCTestCase {
 		let (longString, mediumString, mediumShortString, shortString) = hexStrings()
 
 		do {
-			let longWordLong = try BinaryFormatter.LongWord(hexString: longString)
+			let longWordLong = try Data.LongWord(hexString: longString)
 			XCTAssertEqual(longWordLong, 16045690984503050240)
-			let longWordMedium = try BinaryFormatter.LongWord(hexString: mediumString)
+			let longWordMedium = try Data.LongWord(hexString: mediumString)
 			XCTAssertEqual(longWordMedium, 3735928559)
-			let longWordMediumShort = try BinaryFormatter.LongWord(hexString: mediumShortString)
+			let longWordMediumShort = try Data.LongWord(hexString: mediumShortString)
 			XCTAssertEqual(longWordMediumShort, 57005)
-			let longWordShort = try BinaryFormatter.LongWord(hexString: shortString)
+			let longWordShort = try Data.LongWord(hexString: shortString)
 			XCTAssertEqual(longWordShort, 222)
 		} catch {
 			XCTFail("failed to convert hex string to binary format: \(error)")
@@ -250,12 +250,12 @@ class SwiftyBinaryFormatterTypesTests: XCTestCase {
 		let (longString, mediumString, mediumShortString, shortString) = hexStrings()
 
 		do {
-			XCTAssertThrowsError(try BinaryFormatter.Word(hexString: longString))
-			let valueMedium = try BinaryFormatter.Word(hexString: mediumString)
+			XCTAssertThrowsError(try Data.Word(hexString: longString))
+			let valueMedium = try Data.Word(hexString: mediumString)
 			XCTAssertEqual(valueMedium, 3735928559)
-			let valueMediumShort = try BinaryFormatter.Word(hexString: mediumShortString)
+			let valueMediumShort = try Data.Word(hexString: mediumShortString)
 			XCTAssertEqual(valueMediumShort, 57005)
-			let valueShort = try BinaryFormatter.Word(hexString: shortString)
+			let valueShort = try Data.Word(hexString: shortString)
 			XCTAssertEqual(valueShort, 222)
 		} catch {
 			XCTFail("failed to convert hex string to binary format: \(error)")
@@ -266,11 +266,11 @@ class SwiftyBinaryFormatterTypesTests: XCTestCase {
 		let (longString, mediumString, mediumShortString, shortString) = hexStrings()
 
 		do {
-			XCTAssertThrowsError(try BinaryFormatter.TwoByte(hexString: longString))
-			XCTAssertThrowsError(try BinaryFormatter.TwoByte(hexString: mediumString))
-			let valueMediumShort = try BinaryFormatter.TwoByte(hexString: mediumShortString)
+			XCTAssertThrowsError(try Data.TwoByte(hexString: longString))
+			XCTAssertThrowsError(try Data.TwoByte(hexString: mediumString))
+			let valueMediumShort = try Data.TwoByte(hexString: mediumShortString)
 			XCTAssertEqual(valueMediumShort, 57005)
-			let valueShort = try BinaryFormatter.TwoByte(hexString: shortString)
+			let valueShort = try Data.TwoByte(hexString: shortString)
 			XCTAssertEqual(valueShort, 222)
 		} catch {
 			XCTFail("failed to convert hex string to binary format: \(error)")
@@ -281,10 +281,10 @@ class SwiftyBinaryFormatterTypesTests: XCTestCase {
 		let (longString, mediumString, mediumShortString, shortString) = hexStrings()
 
 		do {
-			XCTAssertThrowsError(try BinaryFormatter.Byte(hexString: longString))
-			XCTAssertThrowsError(try BinaryFormatter.Byte(hexString: mediumString))
-			XCTAssertThrowsError(try BinaryFormatter.Byte(hexString: mediumShortString))
-			let valueShort = try BinaryFormatter.Byte(hexString: shortString)
+			XCTAssertThrowsError(try Data.Byte(hexString: longString))
+			XCTAssertThrowsError(try Data.Byte(hexString: mediumString))
+			XCTAssertThrowsError(try Data.Byte(hexString: mediumShortString))
+			let valueShort = try Data.Byte(hexString: shortString)
 			XCTAssertEqual(valueShort, 222)
 		} catch {
 			XCTFail("failed to convert hex string to binary format: \(error)")
@@ -296,7 +296,7 @@ class SwiftyBinaryFormatterTypesTests: XCTestCase {
 		let invalidSize = "DEADBEEFCAFEDEADBEEFCAFE"
 
 		do {
-			_ = try BinaryFormatter.LongWord(hexString: invalidCharacter)
+			_ = try Data.LongWord(hexString: invalidCharacter)
 		} catch BinaryErrors.containsNonHexCharacters {
 			// it worked!
 		} catch {
@@ -304,7 +304,7 @@ class SwiftyBinaryFormatterTypesTests: XCTestCase {
 		}
 
 		do {
-			_ = try BinaryFormatter.LongWord(hexString: invalidSize)
+			_ = try Data.LongWord(hexString: invalidSize)
 		} catch BinaryErrors.wrongHexStringSize {
 			// it worked
 		} catch {
@@ -314,13 +314,13 @@ class SwiftyBinaryFormatterTypesTests: XCTestCase {
 
 	// MARK: - Float Inits
 	func testFloatInits() {
-		let floatBytes = BinaryFormatter.Word(withFloatRepresentation: -1234.5)
+		let floatBytes = Data.Word(withFloatRepresentation: -1234.5)
 		XCTAssertEqual(floatBytes.hexString, "C49A5000".lowercased())
 
-		let longFloatBytes = BinaryFormatter.LongWord(withFloatRepresentation: -1234.5)
+		let longFloatBytes = Data.LongWord(withFloatRepresentation: -1234.5)
 		XCTAssertEqual(longFloatBytes.hexString, "00000000C49A5000".lowercased())
 
-		let doubleBytes = BinaryFormatter.LongWord(withDoubleRepresentation: 1234.5678)
+		let doubleBytes = Data.LongWord(withDoubleRepresentation: 1234.5678)
 		XCTAssertEqual(doubleBytes.hexString, "40934A456D5CFAAD".lowercased())
 	}
 }
