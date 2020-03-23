@@ -19,7 +19,7 @@ class SwiftyBinaryFormatterTests: XCTestCase {
 
 		var output = ""
 		while size > 0 {
-			let number = Data.LongWord.random(in: 0...Data.LongWord.max)
+			let number = LongWord.random(in: 0...LongWord.max)
 			let bytes = number.bytes
 			let potentialByteCount = [0,4,6,7] // random number of how many bytes to remove, leaving the result with 8, 4, 2, or 1 bytes as a result
 			let firstNonZeroIndex = potentialByteCount.randomElement() ?? 1
@@ -37,13 +37,13 @@ class SwiftyBinaryFormatterTests: XCTestCase {
 
 	// MARK: - test binary formatter inits
 	func testInits() {
-		let testData: [BinaryFormattingProtocol] = [Data.Word(238974), Data.TwoByte(55653)]
+		let testData: [BinaryFormattingProtocol] = [Word(238974), TwoByte(55653)]
 		let formatter = Data(bfpSequence: testData)
 
 		let confirmedData = testData.reduce(Data()) { $0 + $1.bytes }
 		XCTAssertEqual(formatter, confirmedData)
 
-		let blpSeq: [BinaryFormattingProtocol] = [Data.Byte(1), Data.Byte(2), Data.Byte(3), Data.Byte(4)]
+		let blpSeq: [BinaryFormattingProtocol] = [Byte(1), Byte(2), Byte(3), Byte(4)]
 		let formatter2 = Data(bfpSequence: blpSeq)
 		let uInt8: [UInt8] = [1, 2, 3, 4]
 		let data2 = Data(uInt8)
@@ -51,9 +51,9 @@ class SwiftyBinaryFormatterTests: XCTestCase {
 	}
 
 	func testHexString() {
-		let dead = try! Data.TwoByte(hexString: "Dead")
-		let beef = try! Data.TwoByte(hexString: "Beef")
-		let cafe = try! Data.TwoByte(hexString: "cafe")
+		let dead = try! TwoByte(hexString: "Dead")
+		let beef = try! TwoByte(hexString: "Beef")
+		let cafe = try! TwoByte(hexString: "cafe")
 
 		var formatter = Data()
 		formatter.append(sequence: [dead, beef])
@@ -69,9 +69,9 @@ class SwiftyBinaryFormatterTests: XCTestCase {
 
 	/// Also tests ability to use BinaryFormatter. While deprecated, can at least know that it works
 	func testByteCount() {
-		let de = try! Data.Byte(hexString: "De")
-		let ad = try! Data.Byte(hexString: "ad")
-		let beefcafe = try! Data.Word(hexString: "Beefcafe")
+		let de = try! Byte(hexString: "De")
+		let ad = try! Byte(hexString: "ad")
+		let beefcafe = try! Word(hexString: "Beefcafe")
 
 		let formatter = BinaryFormatter(data: [de, ad, beefcafe])
 		XCTAssertEqual(formatter.byteCount, 6)
@@ -85,10 +85,10 @@ class SwiftyBinaryFormatterTests: XCTestCase {
 	}
 
 	func testSubscript() {
-		let de = try! Data.Byte(hexString: "De")
-		let ad = try! Data.Byte(hexString: "ad")
-		let dead = try! Data.TwoByte(hexString: "Dead")
-		let beefcafe = try! Data.Word(hexString: "Beefcafe")
+		let de = try! Byte(hexString: "De")
+		let ad = try! Byte(hexString: "ad")
+		let dead = try! TwoByte(hexString: "Dead")
+		let beefcafe = try! Word(hexString: "Beefcafe")
 
 		var formatter = Data(bfpSequence: [de, ad, beefcafe])
 		XCTAssertEqual(formatter[0], de)
@@ -103,9 +103,9 @@ class SwiftyBinaryFormatterTests: XCTestCase {
 
 	/// Also tests ability to use BinaryFormatter. While deprecated, can at least know that it works
 	func testAppendFormatter() {
-		let dead = try! Data.TwoByte(hexString: "Dead")
-		let beef = try! Data.TwoByte(hexString: "Beef")
-		let cafe = try! Data.TwoByte(hexString: "cafe")
+		let dead = try! TwoByte(hexString: "Dead")
+		let beef = try! TwoByte(hexString: "Beef")
+		let cafe = try! TwoByte(hexString: "cafe")
 
 		var formatter = Data()
 		formatter.append(sequence: [dead, beef])
@@ -130,16 +130,16 @@ class SwiftyBinaryFormatterTests: XCTestCase {
 			switch hexStr.count {
 			case 2: //1
 				// byte
-				value = try Data.Byte(hexString: hexStr)
+				value = try Byte(hexString: hexStr)
 			case 4: //2
 				// twobyte
-				value = try Data.TwoByte(hexString: hexStr)
+				value = try TwoByte(hexString: hexStr)
 			case 8: //4
 				// word
-				value = try Data.Word(hexString: hexStr)
+				value = try Word(hexString: hexStr)
 			case 16: //8
 				// longword
-				value = try Data.LongWord(hexString: hexStr)
+				value = try LongWord(hexString: hexStr)
 			default:
 				XCTFail("Invalid hex string: \(hexStr)")
 				return

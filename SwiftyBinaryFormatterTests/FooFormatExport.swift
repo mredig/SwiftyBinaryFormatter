@@ -11,13 +11,13 @@ import SwiftyBinaryFormatter
 
 struct FooFormatExport {
 	/// Magic number to identify this file format as the first few bytes of the file.
-	let magicHeader = Data.Word(0x464f4f00)
+	let magicHeader = Word(0x464f4f00)
 	/// Identifies the file version
-	let version = Data.Byte(1)
+	let version = Byte(1)
 	/// Provides the total count of all the chunks in this file.
-	var chunkCount: Data.TwoByte {
+	var chunkCount: TwoByte {
 		// there's always 1 body chunk + a variable amount of meta chunks
-		Data.TwoByte(metaStorage.count) + 1
+		TwoByte(metaStorage.count) + 1
 	}
 
 	/// Storage for meta data until it's time to compile down to a binary file
@@ -29,7 +29,7 @@ struct FooFormatExport {
 	private var _renderedData: Data?
 
 	/// Identifies different chunk types with their corresponding constant value
-	enum ChunkType: Data.Word {
+	enum ChunkType: Word {
 		/// Provides the constant value to identify the chunk type in compiled binary
 		case meta = 0x4d455441
 		/// Provides the constant value to identify the chunk type in compiled binary
@@ -44,7 +44,7 @@ struct FooFormatExport {
 		case creationDate(secondsSinceEpoch: Double)
 
 		/// Provides the constant value to identify the meta type in compiled binary
-		var hexKey: Data.Word {
+		var hexKey: Word {
 			switch self {
 			case .author:
 				return 0x41555448
@@ -71,7 +71,7 @@ struct FooFormatExport {
 		let byteCount = value.count + hexKeyBytes.count
 
 		// compile data in correct order
-		var mergedData = Data(Data.Word(byteCount).bytes)
+		var mergedData = Data(Word(byteCount).bytes)
 		mergedData.append(sequence: hexKeyBytes)
 		mergedData.append(value)
 		metaStorage.append(mergedData)
@@ -83,7 +83,7 @@ struct FooFormatExport {
 	/// Could really just convert the string to Data, but this tests more internals
 	private func strToData(_ string: String) -> Data {
 		let dataSeq = string.compactMap { letter -> UInt8? in
-			guard let value = try? Data.Byte(character: letter) else { return nil }
+			guard let value = try? Byte(character: letter) else { return nil }
 			return value
 		}
 		return Data(dataSeq)
@@ -114,7 +114,7 @@ struct FooFormatExport {
 		}
 
 		// compile and append the body data
-		let bodyHeader = Data(bfpSequence: [ChunkType.body.rawValue, Data.Word(bodyStorage.count + 1)])
+		let bodyHeader = Data(bfpSequence: [ChunkType.body.rawValue, Word(bodyStorage.count + 1)])
 		let bodyData = bodyHeader + bodyStorage + [0]
 		renderedData.append(bodyData)
 

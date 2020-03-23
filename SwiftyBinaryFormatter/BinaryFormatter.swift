@@ -15,7 +15,7 @@ public enum BinaryErrors: Error {
 	case nonAsciiCharacter
 }
 
-extension Data.LongWord: BinaryFormattingProtocol {
+extension LongWord: BinaryFormattingProtocol {
 	public init(withDoubleRepresentation double: Double) {
 		self.init(double.bitPattern)
 	}
@@ -25,14 +25,14 @@ extension Data.LongWord: BinaryFormattingProtocol {
 	}
 }
 
-extension Data.Word: BinaryFormattingProtocol {
+extension Word: BinaryFormattingProtocol {
 	public init(withFloatRepresentation float: Float) {
 		self.init(float.bitPattern)
 	}
 }
 
-extension Data.TwoByte: BinaryFormattingProtocol {}
-extension Data.Byte: BinaryFormattingProtocol {}
+extension TwoByte: BinaryFormattingProtocol {}
+extension Byte: BinaryFormattingProtocol {}
 extension Int: BinaryFormattingProtocol {}
 extension Int8: BinaryFormattingProtocol {}
 extension Int16: BinaryFormattingProtocol {}
@@ -40,23 +40,27 @@ extension Int32: BinaryFormattingProtocol {}
 extension Int64: BinaryFormattingProtocol {}
 
 public extension Float {
-	var bytes: [Data.Byte] {
-		Data.Word(withFloatRepresentation: self).bytes
+	var bytes: [Byte] {
+		Word(withFloatRepresentation: self).bytes
 	}
 }
 
 public extension Double {
-	var bytes: [Data.Byte] {
-		Data.LongWord(withDoubleRepresentation: self).bytes
+	var bytes: [Byte] {
+		LongWord(withDoubleRepresentation: self).bytes
 	}
 }
 
 
 @available(*, deprecated, renamed: "Data")
 public struct BinaryFormatter {
+	@available(*, deprecated, message: "Simply use `LongWord` instead (no nesting).")
 	public typealias LongWord = UInt64
+	@available(*, deprecated, message: "Simply use `Word` instead (no nesting).")
 	public typealias Word = UInt32
+	@available(*, deprecated, message: "Simply use `TwoByte` instead (no nesting).")
 	public typealias TwoByte = UInt16
+	@available(*, deprecated, message: "Simply use `Byte` instead (no nesting).")
 	public typealias Byte = UInt8
 
 
@@ -104,12 +108,12 @@ public struct BinaryFormatter {
 }
 
 
-extension Data {
-	public typealias LongWord = UInt64
-	public typealias Word = UInt32
-	public typealias TwoByte = UInt16
-	public typealias Byte = UInt8
+public typealias LongWord = UInt64
+public typealias Word = UInt32
+public typealias TwoByte = UInt16
+public typealias Byte = UInt8
 
+extension Data {
 	public var hexString: String {
 		reduce("") { $0 + $1.hexString }
 	}
@@ -130,7 +134,7 @@ extension Data {
 	}
 
 	@available(*, deprecated, renamed: "init(_:)")
-	public init(data: [Data.Byte]) {
+	public init(data: [Byte]) {
 		self.init(data)
 	}
 

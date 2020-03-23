@@ -16,21 +16,21 @@ It provides methods to easily convert any of the following to any other:
 
 | Type | Alias |
 |-|-|
-| `UInt8` | `Data.Byte` |
-| `UInt16` | `Data.TwoByte` |
-| `UInt32` | `Data.Word` |
-| `UInt64` | `Data.LongWord` |
+| `UInt8` | `Byte` |
+| `UInt16` | `TwoByte` |
+| `UInt32` | `Word` |
+| `UInt64` | `LongWord` |
 
 For example, all of the following work:
 
 ```swift
-let myByte = Data.Byte(123)
+let myByte = Byte(123)
 let myTwoByte = myByte.twoByte
 let myWord = myByte.word
 let myLongWord = myByte.longWord
 
 // and the other direction works too
-let aLongWord = Data.LongWord(6159482783026658)
+let aLongWord = LongWord(6159482783026658)
 let aWord = aLongWord.word // 1464356322
 let aTwoByte = aLongWord.twoByte // 19938
 let aByte = aLongWord.byte // 226
@@ -41,7 +41,7 @@ Notice how, when going from a greater bit size to a smaller, the extra, large ma
 If you need to losslessly convert from a larger bit size to a smaller, you can use the *pluralized* property to get an array of the requested type back. For example:
 
 ```swift
-let aLongWord = Data.LongWord(6159482783026658)
+let aLongWord = LongWord(6159482783026658)
 let words = aLongWord.wordsArray // `.words` already exists in Foundation on int types
 print(words) // [1434116, 1464356322]
 let twoBytes = aLongWord.twoBytes
