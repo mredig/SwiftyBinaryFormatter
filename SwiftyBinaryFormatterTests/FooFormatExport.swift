@@ -9,6 +9,7 @@
 import SwiftyBinaryFormatter
 
 struct FooFormatExport {
+	// MARK: - Constants and Properties (1)
 	/// Magic number to identify this file format as the first few bytes of the file.
 	let magicHeader = Word(0x464f4f00)
 	/// Identifies the file version
@@ -27,6 +28,7 @@ struct FooFormatExport {
 	/// Storage for compiled data to cache for potential subsequent access
 	private var _renderedData: Data?
 
+	// MARK: - Nested Helper Types (2)
 	/// Identifies different chunk types with their corresponding constant value
 	enum ChunkType: Word {
 		/// Provides the constant value to identify the chunk type in compiled binary
@@ -53,9 +55,19 @@ struct FooFormatExport {
 		}
 	}
 
+	// MARK: - Data accumulation (3)
 	/// Accumulates and stores metadata for inclusion when compiling.
 	mutating func addMetaData(ofType type: MetaType) {
 		metaChunks.append(type)
+
+		// if cached data exists, delete it
+		_renderedData = nil
+	}
+
+	/// Takes the body string and stores it for future compilation. Overwrites any previously stored value.
+	mutating func setBody(_ body: String) {
+		// convert string to data and store it
+		bodyStorage = strToData(body)
 
 		// if cached data exists, delete it
 		_renderedData = nil
@@ -70,15 +82,7 @@ struct FooFormatExport {
 		return Data(dataSeq)
 	}
 
-	/// Takes the body string and stores it for future compilation. Overwrites any previously stored value.
-	mutating func setBody(_ body: String) {
-		// convert string to data and store it
-		bodyStorage = strToData(body)
-
-		// if cached data exists, delete it
-		_renderedData = nil
-	}
-
+	// MARK: - Compilation (4)
 	private func renderMetaType(_ type: MetaType) -> Data {
 		// structure: 4 bytes for type, 4 bytes for data byte size, then all data bytes
 		// convert the value portion to Data
