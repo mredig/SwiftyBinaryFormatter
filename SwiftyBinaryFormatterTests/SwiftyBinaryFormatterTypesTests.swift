@@ -322,6 +322,12 @@ class SwiftyBinaryFormatterTypesTests: XCTestCase {
 
 		let doubleBytes = LongWord(withDoubleRepresentation: 1234.5678)
 		XCTAssertEqual(doubleBytes.hexString, "40934A456D5CFAAD".lowercased())
+
+		let moreFloatBytes = Float(-1234.5).bytes
+		XCTAssertEqual(Data(moreFloatBytes).hexString, "C49A5000".lowercased())
+
+		let moreDoubleBytes = (1234.5678).bytes
+		XCTAssertEqual(Data(moreDoubleBytes).hexString, "40934A456D5CFAAD".lowercased())
 	}
 
 	func testSignedSingleConversions() {
