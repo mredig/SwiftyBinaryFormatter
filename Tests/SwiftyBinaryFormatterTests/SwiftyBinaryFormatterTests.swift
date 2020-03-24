@@ -242,29 +242,4 @@ class SwiftyBinaryFormatterTests: XCTestCase {
 								 "1000000000000000"]
 		XCTAssertEqual(binStrsI16, correctBinStrsI16)
 	}
-
-
-	func testThing() {
-
-		let value = Int.min
-
-		print(value.bitPattern.binaryString)
-//		print(value.word)
-//		print(value.twoByte)
-//		print(value.byte)
-
-		let myInt = 1234
-
-		let intInData = Data(myInt.bytes)
-
-		let magicNumber: Word = 0x464f4f00
-
-		var compiledData = Data(magicNumber)
-		compiledData.append(intInData)
-		compiledData.append(Date().timeIntervalSince1970)
-		compiledData.append(Double.pi)
-
-
-		compiledData.append(contentsOf: [Byte(3), Word(42), TwoByte(1238), Word(123456789), LongWord(9999999999)])
-	}
 }

@@ -6,6 +6,7 @@
 //  Copyright © 2020 Red_Egg Productions. All rights reserved.
 //
 
+import Foundation
 import SwiftyBinaryFormatter
 
 struct FooFormatExport {
