@@ -8,50 +8,6 @@
 
 import Foundation
 
-public enum BinaryErrors: Error {
-	case wrongHexStringSize
-	case containsNonHexCharacters
-	case hexConversionFailed
-	case nonAsciiCharacter
-}
-
-extension LongWord: BinaryFormattingProtocol {
-	public init(withDoubleRepresentation double: Double) {
-		self.init(double.bitPattern)
-	}
-
-	public init(withFloatRepresentation float: Float) {
-		self.init(float.bitPattern)
-	}
-}
-
-extension Word: BinaryFormattingProtocol {
-	public init(withFloatRepresentation float: Float) {
-		self.init(float.bitPattern)
-	}
-}
-
-extension TwoByte: BinaryFormattingProtocol {}
-extension Byte: BinaryFormattingProtocol {}
-extension Int: BinaryFormattingProtocol {}
-extension Int8: BinaryFormattingProtocol {}
-extension Int16: BinaryFormattingProtocol {}
-extension Int32: BinaryFormattingProtocol {}
-extension Int64: BinaryFormattingProtocol {}
-
-public extension Float {
-	var bytes: [Byte] {
-		Word(withFloatRepresentation: self).bytes
-	}
-}
-
-public extension Double {
-	var bytes: [Byte] {
-		LongWord(withDoubleRepresentation: self).bytes
-	}
-}
-
-
 @available(*, deprecated, renamed: "Data")
 public struct BinaryFormatter {
 	@available(*, deprecated, message: "Simply use `LongWord` instead (no nesting).")

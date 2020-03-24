@@ -79,7 +79,7 @@ public protocol BinaryFormattingProtocol: CustomStringConvertible {
 	var binaryString: String { get }
 }
 
-public extension BinaryFormattingProtocol where Self: FixedWidthInteger {
+public extension BinaryFormattingProtocol where Self: (FixedWidthInteger & BitRepper) {
 	static var invalidHexCharacters: CharacterSet {
 		CharacterSet(charactersIn: "0123456789abcdef").inverted
 	}
@@ -96,45 +96,49 @@ public extension BinaryFormattingProtocol where Self: FixedWidthInteger {
 	/// Provides conversion if necessary via padding with 0's to a LongWord
 	var longWord: LongWord {
 		// technically, this can never happen unless a new UInt size is added beyond 64 (like UInt128 or something)
+		let value = bitPattern
 		if byteCount > LongWord.typeByteCount {
 			let destMax = LongWord(LongWord.max)
-			let anded = destMax & LongWord(self)
+			let anded = destMax & LongWord(value)
 			return LongWord(anded)
 		}
-		return LongWord(self)
+		return LongWord(value)
 	}
 
 	/// Provides conversion if necessary via padding with 0's to a Word, or clipping higher magnitude bits if the source
 	/// is larger. Will result in a value of UInt32.max
 	var word: Word {
+		let value = bitPattern
 		if byteCount > Word.typeByteCount {
 			let destMax = LongWord(Word.max)
-			let anded = destMax & LongWord(self)
+			let anded = destMax & LongWord(value)
 			return Word(anded)
 		}
-		return Word(self)
+		return Word(value)
 	}
 
 	/// Provides conversion if necessary via padding with 0's to a TwoByte, or clipping higher magnitude bits if the source
 	/// is larger. Will result in a value of UInt16.max
 	var twoByte: TwoByte {
+		let value = bitPattern
 		if byteCount > TwoByte.typeByteCount {
 			let destMax = LongWord(TwoByte.max)
-			let anded = destMax & LongWord(self)
+			let anded = destMax & LongWord(value)
 			return TwoByte(anded)
 		}
-		return TwoByte(self)
+		return TwoByte(value)
 	}
 
 	/// Provides conversion if necessary via clipping higher magnitude bits if the source is larger than a Byte. Will
 	/// result in a value of UInt8.max
 	var byte: Byte {
+		let value = bitPattern
 		if byteCount > Byte.typeByteCount {
 			let destMax = LongWord(Byte.max)
-			let anded = destMax & LongWord(self)
+			let anded = destMax & LongWord(value)
 			return Byte(anded)
 		}
-		return Byte(self)
+		return Byte(value)
 	}
 
 	// MARK: Sequence Types
@@ -254,5 +258,104 @@ extension FixedWidthInteger {
 	subscript(_ index: Int) -> UInt8 {
 		precondition(index < bitWidth && index >= 0, "index (\(index)) invalid for type: \(type(of: self))")
 		return UInt8((self >> index) & 1)
+	}
+
+	subscript(padded index: Int) -> UInt8 {
+		precondition(index >= 0, "padded index (\(index)) invalid for type: \(type(of: self))")
+		return UInt8((self >> index) & 1)
+	}
+}
+
+public enum BinaryErrors: Error {
+	case wrongHexStringSize
+	case containsNonHexCharacters
+	case hexConversionFailed
+	case nonAsciiCharacter
+}
+
+public protocol BitRepper {
+	associatedtype RepType: BinaryInteger
+	var bitPattern: RepType { get }
+}
+
+extension LongWord: BinaryFormattingProtocol, BitRepper {
+	public typealias RepType = Self
+	public var bitPattern: RepType { self }
+
+	public init(withDoubleRepresentation double: Double) {
+		self.init(double.bitPattern)
+	}
+
+	public init(withFloatRepresentation float: Float) {
+		self.init(float.bitPattern)
+	}
+}
+
+extension Word: BinaryFormattingProtocol, BitRepper {
+	public typealias RepType = Self
+	public var bitPattern: RepType { self }
+
+	public init(withFloatRepresentation float: Float) {
+		self.init(float.bitPattern)
+	}
+}
+
+extension TwoByte: BinaryFormattingProtocol, BitRepper {
+	public typealias RepType = Self
+	public var bitPattern: RepType { self }
+}
+
+extension Byte: BinaryFormattingProtocol, BitRepper {
+	public typealias RepType = Self
+	public var bitPattern: RepType { self }
+}
+
+extension UInt: BinaryFormattingProtocol, BitRepper {
+	public typealias RepType = Self
+	public var bitPattern: RepType { self }
+}
+
+extension Int: BinaryFormattingProtocol, BitRepper {
+	public typealias RepType = UInt
+	public var bitPattern: RepType {
+		RepType(bitPattern: self)
+	}
+}
+extension Int8: BinaryFormattingProtocol, BitRepper {
+	public typealias RepType = UInt8
+	public var bitPattern: RepType {
+		RepType(bitPattern: self)
+	}
+}
+extension Int16: BinaryFormattingProtocol, BitRepper {
+	public typealias RepType = UInt16
+	public var bitPattern: RepType {
+		RepType(bitPattern: self)
+	}
+}
+extension Int32: BinaryFormattingProtocol, BitRepper {
+	public typealias RepType = UInt32
+	public var bitPattern: RepType {
+		RepType(bitPattern: self)
+	}
+}
+extension Int64: BinaryFormattingProtocol, BitRepper {
+	public typealias RepType = UInt64
+	public var bitPattern: RepType {
+		RepType(bitPattern: self)
+	}
+}
+
+extension Float: BitRepper {}
+public extension Float {
+	var bytes: [Byte] {
+		Word(withFloatRepresentation: self).bytes
+	}
+}
+
+extension Double: BitRepper {}
+public extension Double {
+	var bytes: [Byte] {
+		LongWord(withDoubleRepresentation: self).bytes
 	}
 }
