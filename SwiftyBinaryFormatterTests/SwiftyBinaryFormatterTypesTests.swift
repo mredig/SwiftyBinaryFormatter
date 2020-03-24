@@ -324,7 +324,7 @@ class SwiftyBinaryFormatterTypesTests: XCTestCase {
 		XCTAssertEqual(doubleBytes.hexString, "40934A456D5CFAAD".lowercased())
 	}
 
-	func testSignedConversions() {
+	func testSignedSingleConversions() {
 		let values: [Int8] = [1, 64, 127, -1, -64, -128]
 		let bitReps: [UInt8] = [1, 64, 127, 255, 192, 128]
 
@@ -347,6 +347,48 @@ class SwiftyBinaryFormatterTypesTests: XCTestCase {
 		let bitReps32_8: [UInt8] = [1, 64, 127, 255, 192, 128, 0, 0, 255]
 
 		let conversion32_8 = values32_8.map { $0.byte }
+		XCTAssertEqual(conversion32_8, bitReps32_8)
+	}
+
+	func testSignedPluralConversions() {
+		let values: [Int8] = [1, 64, 127, -1, -64, -128]
+		let bitReps: [[UInt8]] = [[1], [64], [127], [255], [192], [128]]
+
+		let conversion = values.map { $0.bytes }
+		XCTAssertEqual(conversion, bitReps)
+
+		let values32: [Int32] = [1, 64, 127, -1, -64, -128, -2147483648]
+		let bitReps32: [[UInt32]] = [[1], [64], [127], [4294967295], [4294967232], [4294967168], [2147483648]]
+
+		let conversion32 = values32.map { $0.wordsArray }
+		XCTAssertEqual(conversion32, bitReps32)
+
+		let values8_32: [Int8] = [1, 64, 127, -1, -64, -128]
+		let bitReps8_32: [[UInt32]] = [[1], [64], [127], [255], [192], [128]]
+
+		let conversion8_32 = values8_32.map { $0.wordsArray }
+		XCTAssertEqual(conversion8_32, bitReps8_32)
+
+		let values32_8: [Int32] = [1,
+								   64,
+								   127,
+								   -1,
+								   -64,
+								   -128,
+								   -2147483648,
+								   -256,
+								   -257]
+		let bitReps32_8: [[UInt8]] = [[0, 0, 0, 1],
+									  [0, 0, 0, 64],
+									  [0, 0, 0, 127],
+									  [255, 255, 255, 255],
+									  [255, 255, 255, 192],
+									  [255, 255, 255, 128],
+									  [128, 0, 0, 0],
+									  [255, 255, 255, 0],
+									  [255, 255, 254, 255]]
+
+		let conversion32_8 = values32_8.map { $0.bytes }
 		XCTAssertEqual(conversion32_8, bitReps32_8)
 	}
 }
