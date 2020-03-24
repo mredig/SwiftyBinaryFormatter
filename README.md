@@ -1,6 +1,6 @@
 # SwiftyBinaryFormatter
 
-[![Swift Version][swift-badge]][swift-link] [![License][license-badge]][license-link] [![Carthage compatible][carthage-badge]][carthage-link]
+[![Swift Version][swift-badge]][swift-link] [![License][license-badge]][license-link] [![Carthage compatible][carthage-badge]][carthage-link] [![SwiftPM compatible][spm-badge]][spm-link]
 
 
 This framework is an assistant in generating binary files. Makes it a lot easier, at least for me.
@@ -104,6 +104,8 @@ I think you get the picture.
 1. Run `carthage update`
 1. ...Basically, just use Carthage. It's better.
 
+[spm-link]: https://swift.org/package-manager/
+[spm-badge]: https://img.shields.io/badge/SwiftPM-compatible-green
 [carthage-link]: https://github.com/Carthage/Carthage
 [carthage-badge]: https://img.shields.io/badge/carthage-compatible-green
 [swift-badge]: https://img.shields.io/badge/swift-5.1-orange.svg
