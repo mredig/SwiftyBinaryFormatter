@@ -224,6 +224,28 @@ class SwiftyBinaryFormatterTypesTests: XCTestCase {
 		XCTAssertThrowsError(try LongWord(character: "π"))
 	}
 
+	// MARK: - Subscript
+	func testIntegerSubscript() {
+		let value1: UInt8 = 0b10101010
+		for index in (0..<value1.bitWidth) {
+			let bit = value1[index]
+			let intendedBitValue: UInt8 = index.isMultiple(of: 2) ? 0 : 1
+			XCTAssertEqual(bit, intendedBitValue)
+		}
+
+		for index in (0..<value1.bitWidth * 2) {
+			let bit = value1[padded: index]
+			let intendedBitValue: UInt8
+			if index < value1.bitWidth {
+				intendedBitValue = index.isMultiple(of: 2) ? 0 : 1
+			} else {
+				intendedBitValue = 0
+			}
+
+			XCTAssertEqual(bit, intendedBitValue)
+		}
+	}
+
 	// MARK: - Hex String inits
 	func hexStrings() -> (long: String, medium: String, mediumShort: String, short: String) {
 		return ("DEADBEEFCAFE0000", "DEADBEEF", "DEAD", "DE")

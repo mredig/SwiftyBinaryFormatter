@@ -254,7 +254,7 @@ public extension BinaryFormattingProtocol where Self: (FixedWidthInteger & BitRe
 	}
 }
 
-extension FixedWidthInteger {
+public extension FixedWidthInteger {
 	subscript(_ index: Int) -> UInt8 {
 		precondition(index < bitWidth && index >= 0, "index (\(index)) invalid for type: \(type(of: self))")
 		return UInt8((self >> index) & 1)
