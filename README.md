@@ -7,7 +7,7 @@ This framework is an assistant in generating binary files. Makes it a lot easier
 
 ### What it is
 
-Its philosophy is essentially to make compiling binary data easier to comprehend, as most of the functionality is already available directly in basic Swift types. Through a combination of typealiases to help mentally bridge the concept of `Byte` to `UInt8`, etc and conveniences to append larger types, automatically breaking them down into their smaller components (like taking a `Word`/`UInt32` and breaking it into 4 `Byte`/`UInt8`s to be successively appended to the blob). Additionally, it's meant to be as unobtrusive as possible, mimicing existing method naming styles so as to naturally slip into your code. There's more info on my [blog](https://mikespsyche.com) (Yell at me if I don't update this to the actual post when the post is published).
+Its philosophy is essentially to make compiling binary data easier to comprehend, as most of the functionality is already available directly in basic Swift types. Through a combination of typealiases to help mentally bridge the concept of `Byte` to `UInt8`, etc and conveniences to append larger types, automatically breaking them down into their smaller components (like taking a `Word`/`UInt32` and breaking it into 4 `Byte`/`UInt8`s to be successively appended to the blob). Additionally, it's meant to be as unobtrusive as possible, mimicing existing method naming styles so as to naturally slip into your code. There's more info on my [blog](https://mikespsyche.com/swiftybinaryformatter/).
 
 Note that, while semantically, the terms may not be entirely correct as they are technically relative to the platform they are on, they should should line up with what their typically understood to be. I think. I don't know everything.
 
@@ -86,7 +86,7 @@ I think you get the picture.
 
 #### Carthage
 
-1. Add `github "mredig/SwiftyBinaryFormatter"` to your cartfile
+1. Add `github "mredig/SwiftyBinaryFormatter" ~> 1.0.0` to your cartfile
 1. `carthage update`
 1. Add `import SwiftyBinaryFormatter` to the top of any file you with to use it in
 
@@ -100,7 +100,7 @@ I think you get the picture.
 #### CocoaPods
 
 1. Run `brew install carthage`
-1. Create a file in your project called `Cartfile` and add the line `github "mredig/SwiftyBinaryFormatter"`
+1. Create a file in your project called `Cartfile` and add the line `github "mredig/SwiftyBinaryFormatter" ~> 1.0.0`
 1. Run `carthage update`
 1. ...Basically, just use Carthage. It's better.
 
