@@ -68,7 +68,7 @@ let myFirstData = Data(myInt.bytes)
 Wait, now I need to smash a magic number on the front, and follow it up with a `Double` value of today's date and then pi.:
 
 ```swift
-var compiledData = Data(bfp: magicNumber)
+var compiledData = Data(magicNumber)
 compiledData.append(myFirstData)
 compiledData.append(Date().timeIntervalSince1970)
 compiledData.append(Double.pi)
