@@ -92,7 +92,7 @@ I think you get the picture.
 
 #### SPM
 
-1. Add the line `.package(url: "https://github.com/mredig/SwiftyBinaryFormatter.git", from: "0.9.0"),` to the appropriate section of your `Package.swift`
+1. Add the line `.package(url: "https://github.com/mredig/SwiftyBinaryFormatter.git", from: "1.0.0")` to the appropriate section of your `Package.swift`
 	* The Package Name is `SwiftyBinaryFormatter` - add that as a dependency to any targets you want to use it in.
 1. `swift package update` or use Xcode
 1. Add `import SwiftyBinaryFormatter` to the top of any file you with to use it in
@@ -106,7 +106,7 @@ I think you get the picture.
 
 [carthage-link]: https://github.com/Carthage/Carthage
 [carthage-badge]: https://img.shields.io/badge/carthage-compatible-red
-[swift-badge]: https://img.shields.io/badge/swift-5.2-orange.svg
+[swift-badge]: https://img.shields.io/badge/swift-5.1-orange.svg
 [swift-link]: https://swift.org/
 [license-badge]: https://img.shields.io/badge/License-MIT-blue.svg
 [license-link]: LICENSE
