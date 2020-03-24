@@ -76,6 +76,7 @@ public protocol BinaryFormattingProtocol: CustomStringConvertible {
 	init(character: Character) throws
 
 	var hexString: String { get }
+	var binaryString: String { get }
 }
 
 public extension BinaryFormattingProtocol where Self: FixedWidthInteger {
@@ -223,6 +224,10 @@ public extension BinaryFormattingProtocol where Self: FixedWidthInteger {
 		return zeroPad + valueStr
 	}
 
+	var binaryString: String {
+		(0..<bitWidth).reduce("") { "\(self[$1])" + $0 }
+	}
+
 	var description: String {
 		return self.hexString
 	}
@@ -242,5 +247,12 @@ public extension BinaryFormattingProtocol where Self: FixedWidthInteger {
 
 		guard let outValue = Self(lowerCase, radix: 16) else { throw BinaryErrors.hexConversionFailed }
 		self.init(outValue)
+	}
+}
+
+extension FixedWidthInteger {
+	subscript(_ index: Int) -> UInt8 {
+		precondition(index < bitWidth && index >= 0, "index (\(index)) invalid for type: \(type(of: self))")
+		return UInt8((self >> index) & 1)
 	}
 }
