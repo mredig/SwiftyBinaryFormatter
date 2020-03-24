@@ -105,7 +105,7 @@ I think you get the picture.
 1. ...Basically, just use Carthage. It's better.
 
 [carthage-link]: https://github.com/Carthage/Carthage
-[carthage-badge]: https://img.shields.io/badge/carthage-compatible-red
+[carthage-badge]: https://img.shields.io/badge/carthage-compatible-green
 [swift-badge]: https://img.shields.io/badge/swift-5.1-orange.svg
 [swift-link]: https://swift.org/
 [license-badge]: https://img.shields.io/badge/License-MIT-blue.svg
