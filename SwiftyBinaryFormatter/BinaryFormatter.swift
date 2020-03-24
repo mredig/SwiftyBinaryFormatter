@@ -37,7 +37,7 @@ public struct BinaryFormatter {
 	}
 
 	public mutating func append(element: BinaryFormattingProtocol) {
-		data.append(element: element)
+		data.append(element)
 	}
 
 	public mutating func append(formatter: BinaryFormatter) {
@@ -80,16 +80,16 @@ extension Data {
 	@available(swift, obsoleted: 5.0, message: "No need to use the `data` property as this is an instance of Data itself")
 	public var data: Data { self }
 
-	@available(*, deprecated, renamed: "init(blpSequence:)")
+	@available(*, deprecated, renamed: "init(_:)")
 	public init(data: [BinaryFormattingProtocol]) {
-		self.init(bfpSequence: data)
+		self.init(data)
 	}
 
-	public init(bfp: BinaryFormattingProtocol) {
+	public init(_ bfp: BinaryFormattingProtocol) {
 		self.init(bfp.bytes)
 	}
 
-	public init(bfpSequence: [BinaryFormattingProtocol]) {
+	public init(_ bfpSequence: [BinaryFormattingProtocol]) {
 		self.init(bfpSequence.flatMap { $0.bytes })
 	}
 
@@ -98,8 +98,12 @@ extension Data {
 		self.init(data)
 	}
 
-	public mutating func append(element: BinaryFormattingProtocol) {
+	public mutating func append(_ element: BinaryFormattingProtocol) {
 		append(contentsOf: element.bytes)
+	}
+
+	public mutating func append<T: BitRepper>(_ element: T) {
+		append(contentsOf: element.bitPattern.bytes)
 	}
 
 	@available(*, deprecated, message: "BinaryFormatter is deprecated. Look into migrating the source to Data")
@@ -107,7 +111,12 @@ extension Data {
 		append(contentsOf: formatter.data)
 	}
 
+	@available(*, deprecated, renamed: "append(contentsOf:)")
 	public mutating func append(sequence: [BinaryFormattingProtocol]) {
-		append(contentsOf: sequence.flatMap { $0.bytes })
+		append(contentsOf: sequence)
+	}
+
+	public mutating func append(contentsOf bfpSequence: [BinaryFormattingProtocol]) {
+		append(contentsOf: bfpSequence.flatMap { $0.bytes })
 	}
 }

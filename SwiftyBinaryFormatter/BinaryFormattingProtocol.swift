@@ -274,7 +274,7 @@ public enum BinaryErrors: Error {
 }
 
 public protocol BitRepper {
-	associatedtype RepType: BinaryInteger
+	associatedtype RepType: (BinaryInteger & BinaryFormattingProtocol)
 	var bitPattern: RepType { get }
 }
 

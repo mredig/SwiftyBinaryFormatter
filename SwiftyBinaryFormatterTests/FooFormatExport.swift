@@ -99,9 +99,9 @@ struct FooFormatExport {
 		let byteCount =  hexKeyBytes.count + metaValue.count
 
 		// compile data in correct order
-		var mergedData = Data(bfp: ChunkType.meta.rawValue)
-		mergedData.append(sequence: Word(byteCount).bytes)
-		mergedData.append(sequence: hexKeyBytes)
+		var mergedData = Data(ChunkType.meta.rawValue)
+		mergedData.append(Word(byteCount))
+		mergedData.append(contentsOf: hexKeyBytes)
 		mergedData.append(metaValue)
 
 		return mergedData
@@ -115,7 +115,7 @@ struct FooFormatExport {
 		}
 
 		// compile the file header, including magic, version, chunk count, and meta info
-		var renderedData = Data(bfpSequence: [magicHeader, version, chunkCount])
+		var renderedData = Data([magicHeader, version, chunkCount])
 
 		// compile and append all the meta chunks
 		for metaChunk in metaChunks {
@@ -123,7 +123,7 @@ struct FooFormatExport {
 		}
 
 		// compile and append the body data
-		let bodyHeader = Data(bfpSequence: [ChunkType.body.rawValue, Word(bodyStorage.count + 1)])
+		let bodyHeader = Data([ChunkType.body.rawValue, Word(bodyStorage.count + 1)])
 		let bodyData = bodyHeader + bodyStorage + [0]
 		renderedData.append(bodyData)
 
